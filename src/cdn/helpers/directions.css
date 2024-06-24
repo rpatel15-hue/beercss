@@ -1,32 +1,28 @@
-
-
 .horizontal {
   display: inline-flex;
   flex-direction: row !important;
-  gap: 16rem;
-  width: auto !important;
-  max-width: none !important;
+  gap: 1rem;
+  inline-size: auto !important;
+  max-inline-size: none !important;
 }
 
 .horizontal > * {
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+  margin-block: 0 !important;
 }
 
-.vertical,
-button.vertical,
-.button.vertical,
-.chip.vertical {
-  display: inline-flex;
+.vertical {
+  display: flex;
   flex-direction: column !important;
-  gap: 4rem;
-  height: auto !important;
-  max-height: none !important;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+}
+
+:is(a, button, .button, .chip).vertical {
+  display: inline-flex;
+  gap: 0.25rem;
+  block-size: auto !important;
+  max-block-size: none !important;
+  padding-block: 0.5rem;
 }
 
 .vertical > * {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  margin-inline: 0 !important;
 }

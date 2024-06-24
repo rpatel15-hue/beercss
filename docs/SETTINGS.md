@@ -10,7 +10,7 @@ light, dark
 
 #### Variables
 
---primary, --on-primary, --primary-container, --on-primary-container, --secondary, --on-secondary, --secondary-container, --on-secondary-container, --tertiary, --on-tertiary, --tertiary-container, --on-tertiary-container, --error, --on-error, --tertiary-error, --on-error-container, --background, --on-background, --surface, --on-surface, --surface-container, --on-surface-container, --on-surface-variant, --inverse-surface, --inverse-on-surface, --outline, --active, --overlay, --font, --size, --elevate1, --elevate2, --elevate3, --speed1, --speed2, --speed3, --speed4
+--primary, --on-primary, --primary-container, --on-primary-container, --secondary, --on-secondary, --secondary-container, --on-secondary-container, --tertiary, --on-tertiary, --tertiary-container, --on-tertiary-container, --error, --on-error, --error-container, --on-error-container, --background, --on-background, --surface, --on-surface, --surface-variant, --on-surface-variant, --outline, --outline-variant, --shadow, --scrim, --inverse-surface, --inverse-on-surface, --inverse-primary, --surface-dim, --surface-bright, --surface-container-lowest, --surface-container-low, --surface-container, --surface-container-high, --surface-container-highest --active, --overlay, --elevate1, --elevate2, --elevate3, --size, --font, --font-icon, --speed1, --speed2, --speed3, --speed4
 
 #### Example
 
@@ -57,8 +57,8 @@ let theme = await ui("theme");
 
 // The returned theme is
 {
-  dark: "--primary: #D0BCFF;--on-primary: #371E73;--primary-container: #4F378B;--on-primary-container: #EADDFF;--secondary: #CCC2DC;--on-secondary: #332D41;--secondary-container: #4A4458;--on-secondary-container: #E8DEF8;--tertiary: #EFB8C8;--on-tertiary: #492532;--tertiary-container: #633B48;--on-tertiary-container: #FFD8E4;--error: #F2B8B5;--on-error: #601410;--error-container: #8C1D18;--on-error-container: #F9DEDC;--background: #1C1B1F;--on-background: #E6E1E5;--surface: #1C1B1F;--on-surface: #E6E1E5;--outline: #938F99;--surface-variant: #49454F;--on-surface-variant: #CAC4D0;--inverse-surface: #E6E1E5;--inverse-on-surface: #313033;--active: rgba(255,255,255,.2);--mode: dark;",
-  light: "--primary: #6750A4;--on-primary: #FFFFFF;--primary-container: #EADDFF;--on-primary-container: #21005E;--secondary: #625B71;--on-secondary: #FFFFFF;--secondary-container: #E8DEF8;--on-secondary-container: #1E192B;--tertiary: #7D5260;--on-tertiary: #FFFFFF;--tertiary-container: #FFD8E4;--on-tertiary-container: #370B1E;--error: #B3261E;--on-error: #FFFFFF;--error-container: #F9DEDC;--on-error-container: #370B1E;--background: #FFFBFE;--on-background: #1C1B1F;--surface: #FFFBFE;--on-surface: #1C1B1F;--outline: #79747E;--surface-variant: #E7E0EC;--on-surface-variant: #49454E;--inverse-surface: #313033;--inverse-on-surface: #F4EFF4;--active: rgba(0,0,0,.1);--mode: light;"
+  dark: "--primary:#cfbcff;--on-primary:#381e72;--primary-container:#4f378a;--on-primary-container:#e9ddff;--secondary:#cbc2db;--on-secondary:#332d41;--secondary-container:#4a4458;--on-secondary-container:#e8def8;--tertiary:#efb8c8;--on-tertiary:#4a2532;--tertiary-container:#633b48;--on-tertiary-container:#ffd9e3;--error:#ffb4ab;--on-error:#690005;--error-container:#93000a;--on-error-container:#ffb4ab;--background:#1c1b1e;--on-background:#e6e1e6;--surface:#141316;--on-surface:#e6e1e6;--surface-variant:#49454e;--on-surface-variant:#cac4cf;--outline:#948f99;--outline-variant:#49454e;--shadow:#000000;--scrim:#000000;--inverse-surface:#e6e1e6;--inverse-on-surface:#313033;--inverse-primary:#6750a4;--surface-dim:#141316;--surface-bright:#3a383c;--surface-container-lowest:#0f0e11;--surface-container-low:#1c1b1e;--surface-container:#201f22;--surface-container-high:#2b292d;--surface-container-highest:#363438;",
+  light: "--primary:#6750a4;--on-primary:#ffffff;--primary-container:#e9ddff;--on-primary-container:#22005d;--secondary:#625b71;--on-secondary:#ffffff;--secondary-container:#e8def8;--on-secondary-container:#1e192b;--tertiary:#7e5260;--on-tertiary:#ffffff;--tertiary-container:#ffd9e3;--on-tertiary-container:#31101d;--error:#ba1a1a;--on-error:#ffffff;--error-container:#ffdad6;--on-error-container:#410002;--background:#fffbff;--on-background:#1c1b1e;--surface:#fdf8fd;--on-surface:#1c1b1e;--surface-variant:#e7e0eb;--on-surface-variant:#49454e;--outline:#7a757f;--outline-variant:#cac4cf;--shadow:#000000;--scrim:#000000;--inverse-surface:#313033;--inverse-on-surface:#f4eff4;--inverse-primary:#cfbcff;--surface-dim:#ddd8dd;--surface-bright:#fdf8fd;--surface-container-lowest:#ffffff;--surface-container-low:#f7f2f7;--surface-container:#f2ecf1;--surface-container-high:#ece7eb;--surface-container-highest:#e6e1e6;"
 }
 ```
 
@@ -89,81 +89,91 @@ To customize the default theme, you need to use the css structure below.
 ```css
 :root,
 body.light {
-  --primary: #6750A4;
-  --on-primary: #FFFFFF;
-  --primary-container: #EADDFF;
-  --on-primary-container: #21005E;
-  --secondary: #625B71;
-  --on-secondary: #FFFFFF;
-  --secondary-container: #E8DEF8;
-  --on-secondary-container: #1E192B;
-  --tertiary: #7D5260;
-  --on-tertiary: #FFFFFF;
-  --tertiary-container: #FFD8E4;
-  --on-tertiary-container: #370B1E;
-  --error: #B3261E;
-  --on-error: #FFFFFF;
-  --error-container: #F9DEDC;
-  --on-error-container: #370B1E;
-  --background: #FFFBFE;
-  --on-background: #1C1B1F;
-  --surface: #FFFBFE;
-  --on-surface: #1C1B1F;
-  --surface-variant: #E7E0EC;
-  --on-surface-variant: #49454E;
+  --primary: #6750a4;
+  --on-primary: #ffffff;
+  --primary-container: #e9ddff;
+  --on-primary-container: #22005d;
+  --secondary: #625b71;
+  --on-secondary: #ffffff;
+  --secondary-container: #e8def8;
+  --on-secondary-container: #1e192b;
+  --tertiary: #7e5260;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #ffd9e3;
+  --on-tertiary-container: #31101d;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #410002;
+  --background: #fffbff;
+  --on-background: #1c1b1e;
+  --surface: #fdf8fd;
+  --on-surface: #1c1b1e;
+  --surface-variant: #e7e0eb;
+  --on-surface-variant: #49454e;
+  --outline: #7a757f;
+  --outline-variant: #cac4cf;
+  --shadow: #000000;
+  --scrim: #000000;
   --inverse-surface: #313033;
-  --inverse-on-surface: #F4EFF4;
-  --outline: #79747E;
-  --active: rgba(0,0,0,.1);
-  --overlay: rgba(0,0,0,.5);
-  --elevate1: 0 2rem 2rem 0 rgba(0, 0, 0, .14), 0 1rem 5rem 0 rgba(0, 0, 0, .12), 0 3rem 1rem -2rem rgba(0, 0, 0, .2);
-  --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, .14), 0 1rem 18rem 0 rgba(0, 0, 0, .12), 0 3rem 5rem -1rem rgba(0, 0, 0, .3);
-  --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, .14), 0 1rem 31rem 0 rgba(0, 0, 0, .12), 0 3rem 9rem 0rem rgba(0, 0, 0, .4);
-  --size: 1px;
-  --font: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  --speed1: .1s;
-  --speed2: .2s;
-  --speed3: .3s;
-  --speed4: .4s;
+  --inverse-on-surface: #f4eff4;
+  --inverse-primary: #cfbcff;
+  --surface-dim: #ddd8dd;
+  --surface-bright: #fdf8fd;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f7f2f7;
+  --surface-container: #f2ecf1;
+  --surface-container-high: #ece7eb;
+  --surface-container-highest: #e6e1e6;
+  --overlay: rgb(0 0 0 / 0.5);
+  --active: rgb(0 0 0 / 0.1);
+  --elevate1: 0 0.125rem 0.125rem 0 rgb(0 0 0 / 0.32);
+  --elevate2: 0 0.25rem 0.5rem 0 rgb(0 0 0 / 0.4);
+  --elevate3: 0 0.375rem 0.75rem 0 rgb(0 0 0 / 0.48);
 }
 
 body.dark {
-  --primary: #D0BCFF;
-  --on-primary: #371E73;
-  --primary-container: #4F378B;
-  --on-primary-container: #EADDFF;
-  --secondary: #CCC2DC;
-  --on-secondary: #332D41;
-  --secondary-container: #4A4458;
-  --on-secondary-container: #E8DEF8;
-  --tertiary: #EFB8C8;
-  --on-tertiary: #492532;
-  --tertiary-container: #633B48;
-  --on-tertiary-container: #FFD8E4;
-  --error: #F2B8B5;
-  --on-error: #601410;
-  --error-container: #8C1D18;
-  --on-error-container: #F9DEDC;
-  --background: #1C1B1F;
-  --on-background: #E6E1E5;
-  --surface: #1C1B1F;
-  --on-surface: #E6E1E5;
-  --surface-variant: #49454F;
-  --on-surface-variant: #CAC4D0;
-  --inverse-surface: #E6E1E5;
+  --primary: #cfbcff;
+  --on-primary: #381e72;
+  --primary-container: #4f378a;
+  --on-primary-container: #e9ddff;
+  --secondary: #cbc2db;
+  --on-secondary: #332d41;
+  --secondary-container: #4a4458;
+  --on-secondary-container: #e8def8;
+  --tertiary: #efb8c8;
+  --on-tertiary: #4a2532;
+  --tertiary-container: #633b48;
+  --on-tertiary-container: #ffd9e3;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffb4ab;
+  --background: #1c1b1e;
+  --on-background: #e6e1e6;
+  --surface: #141316;
+  --on-surface: #e6e1e6;
+  --surface-variant: #49454e;
+  --on-surface-variant: #cac4cf;
+  --outline: #948f99;
+  --outline-variant: #49454e;
+  --shadow: #000000;
+  --scrim: #000000;
+  --inverse-surface: #e6e1e6;
   --inverse-on-surface: #313033;
-  --outline: #938F99;
-  --active: rgba(255,255,255,.2);
-  --overlay: rgba(0,0,0,.5);
-  --elevate1: 0 2rem 2rem 0 rgba(0, 0, 0, .14), 0 1rem 5rem 0 rgba(0, 0, 0, .12), 0 3rem 1rem -2rem rgba(0, 0, 0, .2);
-  --elevate2: 0 6rem 10rem 0 rgba(0, 0, 0, .14), 0 1rem 18rem 0 rgba(0, 0, 0, .12), 0 3rem 5rem -1rem rgba(0, 0, 0, .3);
-  --elevate3: 0 10rem 16rem 0 rgba(0, 0, 0, .14), 0 1rem 31rem 0 rgba(0, 0, 0, .12), 0 3rem 9rem 0rem rgba(0, 0, 0, .4);
-  --size: 1px;
-  --font: "Roboto", BlinkMacSystemFont, -apple-system, "Segoe UI", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  --speed1: .1s;
-  --speed2: .2s;
-  --speed3: .3s;
-  --speed4: .4s;
+  --inverse-primary: #6750a4;
+  --surface-dim: #141316;
+  --surface-bright: #3a383c;
+  --surface-container-lowest: #0f0e11;
+  --surface-container-low: #1c1b1e;
+  --surface-container: #201f22;
+  --surface-container-high: #2b292d;
+  --surface-container-highest: #363438;
+  --overlay: rgb(0 0 0 / 0.5);
+  --active: rgb(255 255 255 / 0.2);
+  --elevate1: 0 0.125rem 0.125rem 0 rgb(0 0 0 / 0.32);
+  --elevate2: 0 0.25rem 0.5rem 0 rgb(0 0 0 / 0.4);
+  --elevate3: 0 0.375rem 0.75rem 0 rgb(0 0 0 / 0.48);
 }
 ```
 
@@ -173,7 +183,39 @@ It sets the hover background, the overlay background, the font family order and 
 
 #### Variables
 
---active, --overlay, --font, --size
+--active, --overlay, --size
+
+## Fonts
+
+It sets the font and icon font of project.
+
+#### Variables
+
+--font, --font-icon
+
+#### Examples
+
+```css
+ /* To import your custom font */
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap";
+
+:root {
+  /* To use your custom font */
+  --font: "Roboto Flex";
+
+  /* To remove default icons */
+  --font-icon: none;
+
+  /* To use default outlined icons */
+  --font-icon: "Material Symbols Outlined";
+
+  /* To use default rounded icons */
+  --font-icon: "Material Symbols Rounded";
+
+  /* To use default sharp icons */
+  --font-icon: "Material Symbols Sharp";
+}
+```
 
 ## Elevates
 
@@ -195,4 +237,4 @@ It sets the animation speed of elements.
 
 [Begin](INDEX.md), [Elements](ELEMENTS.md), [Helpers](HELPERS.md), [Settings](SETTINGS.md), [Summary](SUMMARY.md), [beercss.com](https://www.beercss.com)
 
-[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dropdown](DROPDOWN.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [Loader](LOADER.md), [Media](MEDIA.md), [Modal](MODAL.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Toast](TOAST.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)
+[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dialog](DIALOG.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [List](LIST.md), [Main layout](MAIN_LAYOUT.md), [Media](MEDIA.md), [Menu](MENU.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Slider](SLIDER.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Snackbar](SNACKBAR.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)

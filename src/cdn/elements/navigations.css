@@ -1,249 +1,246 @@
+nav > :is(ol, ul),
+nav > :is(ol, ul) > li {
+  all: unset;
+}
+
 nav,
-.row {
+.row,
+a.row,
+nav.drawer > :is(a, label),
+nav.drawer > :is(ol, ul) > li > :is(a, label) {
   display: flex;
   align-items: center;
+  align-self: normal;
+  text-align: start;
   justify-content: flex-start;
   white-space: nowrap;
-  border-radius: 0;
-  gap: 16rem;
+  gap: 1rem;
+  margin: 0;
 }
 
-*:not(.divider, .small-divider, .medium-divider, .large-divider) + nav:not(.left, .right, .top, .bottom),
-*:not(.divider, .small-divider, .medium-divider, .large-divider) + .row:not(a) {
-  margin-top: 16rem;
+:is(nav, .row, .max) > :only-child,
+nav > :is(ol, ul) > li > :only-child {
+  margin: 0;
 }
 
-nav *,
-.row * {
-  margin-top: 0;
-  margin-bottom: 0;
+* + :is(nav, .row) {
+  margin-block-start: 1rem;
 }
 
-nav > *,
-.row > * {
-  margin: 0 !important;
+:is(nav, .row) > * {
+  margin: 0;
   white-space: normal;
   flex: none;
 }
 
-nav.no-space,
-.row.no-space {
-  gap: 0rem;
+:is(nav, .row).no-space {
+  gap: 0;
 }
 
-nav.no-space > .border + .border,
-.row.no-space > .border + .border {
-  border-left: 0;
+:is(nav, .row).no-space > .border + .border {
+  border-inline-start: 0;
 }
 
-nav.medium-space,
-.row.medium-space {
-  gap: 24rem;
+:is(nav, .row).medium-space {
+  gap: 1.5rem;
 }
 
-nav.large-space,
-.row.large-space {
-  gap: 32rem;
+:is(nav, .row).large-space {
+  gap: 2rem;
 }
 
-nav > .max,
-.row > .max {
-  flex: auto;
+:is(nav, .row) > .max,
+:is(nav, .row) > :is(ol, ul) > .max,
+nav.drawer > :is(a, label) > .max,
+nav.drawer > :is(ol, ul) > li > :is(a, label) > .max {
+  flex: 1;
 }
 
-nav.wrap,
-.row.wrap {
+:is(nav, .row).wrap {
   display: flex;
   flex-wrap: wrap;
 }
 
-header > nav,
-header > .row {
-  min-height: 64rem;
+:is(header, footer) > :is(nav, .row) {
+  min-block-size: inherit;
 }
 
-footer > nav,
-footer > .row {
-  min-height: 80rem;
+:is(nav, .row) > .border.no-margin + .border.no-margin {
+  border-inline-start: 0;
 }
 
-nav > .border.no-margin + .border.no-margin,
-.row > .border.no-margin + .border.no-margin {
-  border-left: 0;
-}
-
-nav.left,
-nav.right,
-nav.top,
-nav.bottom {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+nav:is(.left, .right, .top, .bottom) {
   border: 0;
   position: fixed;
   color: var(--on-surface);
-  background-color: var(--surface);
   transform: none;
   z-index: 100;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: auto;
-  width: auto;
+  block-size: auto;
+  inline-size: auto;
   text-align: center;
-  padding: 8rem;
+  padding: 0.5rem;
+  margin: 0;
+  inset: 0;
 }
 
-nav.left,
-nav.right {
-  width: 80rem;
+nav:is(.left, .right) {
+  inline-size: 5rem;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: var(--surface);
 }
 
-nav.top,
-nav.bottom {
-  height: 80rem;
+nav:is(.top, .bottom) {
+  block-size: 5rem;
+  justify-content: center;
+  flex-direction: row;
+  background-color: var(--surface-container);
 }
 
 nav.top {
-  bottom: auto;
-  justify-content: center;
-  flex-direction: row;
+  inset-block-end: auto;
 }
 
 nav.left {
-  right: auto;
-  justify-content: flex-start;
-  flex-direction: column;
+  inset-inline-end: auto;
 }
 
 nav.right {
-  left: auto;
-  justify-content: flex-start;
-  flex-direction: column;
+  inset-inline-start: auto;
 }
 
 nav.bottom {
-  top: auto;
-  justify-content: center;
-  flex-direction: row;
+  inset-block-start: auto;
 }
 
-nav.left > a:not(button, .button, .chip, img, video),
-nav.right > a:not(button, .button, .chip, img, video),
-nav.top > a:not(button, .button, .chip, img, video),
-nav.bottom > a:not(button, .button, .chip, img, video) {
-  min-width: 56rem;
-  min-height: 56rem;
-  text-align: center;
+nav.drawer {
+  flex-direction: column;
+  align-items: normal;
+  inline-size: 20rem;
+  gap: 0;
+  padding: 0.5rem 1rem;
+}
+
+nav.drawer:is(.min, .max) {
+  inline-size: auto;
+}
+
+nav.drawer.max {
+  inline-size: 100%;
+}
+
+:is(nav, .row) > header {
+  background-color: inherit;
+}
+
+nav:is(.left, .right) > header {
+  transform: translateY(-0.5rem);
+}
+
+nav.drawer > header {
+  transform: translateY(-0.75rem);
+  min-block-size: 4.5rem;
+  align-self: stretch;
+}
+
+nav.drawer > :is(a, label),
+nav.drawer > :is(ol, ul) > li > :is(a, label),
+a.row.wave {
+  padding: 0.75rem;
+  font-size: inherit;
+}
+
+nav.drawer > a,
+nav.drawer > :is(ol, ul) > li > a {
+  border-radius: 2rem;
+}
+
+nav.drawer > a:is(:hover, .active),
+nav.drawer > :is(ol, ul) > li > a:is(:hover, .active) {
+  background-color: var(--secondary-container);
+}
+
+nav.drawer > a:is(:hover, :focus, .active) > i,
+nav.drawer > :is(ol, ul) > li > a:is(:hover, :focus, .active) > i {
+  font-variation-settings: "FILL" 1;
+}
+
+nav > :is(ol, ul) {
+  all: inherit;
+  flex: auto;
+}
+
+nav:not(.left, .right, .bottom, .top) > :is(ol, ul) {
+  padding: 0;
+}
+
+nav:is(.left, .right, .top, .bottom):not(.drawer) > a:not(.button, .chip),
+nav:is(.left, .right, .top, .bottom):not(.drawer) > :is(ol, ul) > li > a:not(.button, .chip) {
+  align-self: center;
   display: flex;
-  z-index: 101;
   flex-direction: column;
 }
 
-nav.left > a:not(button, .button, .chip, img, video),
-nav.right > a:not(button, .button, .chip, img, video) {
-  width: auto;
+nav:is(.top, .bottom):not(.drawer) > a:not(.button, .chip),
+nav:is(.top, .bottom):not(.drawer) > :is(ol, ul) > li > a:not(.button, .chip) {
+  inline-size: 3.5rem;
 }
 
-nav.top > a:not(button, .button, .chip, img, video),
-nav.bottom > a:not(button, .button, .chip, img, video) {
-  height: auto;
-  width: 56rem;
-}
-
-nav.left:before,
-nav.right:before,
-nav.top:before,
-nav.bottom:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: inherit;
-  z-index: 101;
-  border-radius: inherit;
-}
-
-nav.left > :not(.modal, .overlay),
-nav.right > :not(.modal, .overlay),
-nav.top > :not(.modal, .overlay),
-nav.bottom > :not(.modal, .overlay) {
-  z-index: 101;  
-}
-
-nav.left > a:not(button, .button, .chip) > i,
-nav.right > a:not(button, .button, .chip) > i,
-nav.top > a:not(button, .button, .chip) > i,
-nav.bottom > a:not(button, .button, .chip) > i {
-  padding: 4rem;
-  border-radius: 32rem;
-  transition: var(--speed1) padding linear;
+nav:is(.left, .right, .top, .bottom):not(.drawer) > a:not(.button, .chip) > i,
+nav:is(.left, .right, .top, .bottom):not(.drawer) > :is(ol, ul) > li > a:not(.button, .chip) > i {
+  padding: 0.25rem;
+  border-radius: 2rem;
+  transition: padding var(--speed1) linear;
   margin: 0 auto;
 }
 
-nav.left > a:not(button, .button, .chip):hover > i,
-nav.left > a:not(button, .button, .chip):focus > i,
-nav.left > a:not(button, .button, .chip).active > i,
-nav.right > a:not(button, .button, .chip):hover > i,
-nav.right > a:not(button, .button, .chip):focus > i,
-nav.right > a:not(button, .button, .chip).active > i,
-nav.top > a:not(button, .button, .chip):hover > i,
-nav.top > a:not(button, .button, .chip):focus > i,
-nav.top > a:not(button, .button, .chip).active > i,
-nav.bottom > a:not(button, .button, .chip):focus > i,
-nav.bottom > a:not(button, .button, .chip):hover > i,
-nav.bottom > a:not(button, .button, .chip).active > i {
+nav:is(.left, .right, .top, .bottom):not(.drawer) > a:not(.button, .chip):is(:hover, :focus, .active) > i,
+nav:is(.left, .right, .top, .bottom):not(.drawer) > :is(ol, ul) > li > a:not(.button, .chip):is(:hover, :focus, .active) > i {
   background-color: var(--secondary-container);
   color: var(--on-secondary-container);
-  padding: 4rem 16rem;
-  font-variation-settings: 'FILL' 1;
+  padding: 0.25rem 1rem;
+  font-variation-settings: "FILL" 1;
 }
 
-nav.left > .modal {
-  padding-left: 88rem;
-}
-
-nav.right > .modal {
-  padding-right: 88rem;
-}
-
-nav.top > .modal {
-  padding-top: 88rem;
-}
-
-nav.bottom > .modal {
-  padding-bottom: 88rem;
-}
-
-nav.left-align,
-nav.top-align {
+:is(nav, .row):is(.left-align, .top-align, .vertical) {
   justify-content: flex-start;
 }
 
-nav.right-align,
-nav.bottom-align {
+:is(nav, .row):is(.right-align, .bottom-align) {
   justify-content: flex-end;
 }
 
-nav.center-align,
-nav.middle-align {
+:is(nav, .row):is(.center-align, .middle-align) {
   justify-content: center;
 }
 
+:is(nav, .row):is(.left-align, .top-align, .vertical).vertical {
+  align-items: flex-start;
+}
+
+:is(nav, .row):is(.right-align, .bottom-align).vertical {
+  align-items: flex-end;
+}
+
+:is(nav, .row):is(.center-align, .middle-align).vertical {
+  align-items: center;
+}
+
+:is(.drawer, .vertical) > :is(li, [class*=divider]):not(.vertical),
+:is(.drawer, .vertical) > :is(ol, ul) > li:not(.vertical) {
+  align-self: stretch;
+}
+
 nav:not(.left, .right) > .space {
-  width: 8rem;
+  inline-size: 0.5rem;
 }
 
 nav:not(.left, .right) > .medium-space {
-  width: 16rem;
+  inline-size: 1rem;
 }
 
 nav:not(.left, .right) > .large-space {
-  width: 24rem;
+  inline-size: 1.5rem;
 }
 
 @media only screen and (max-width: 600px) {

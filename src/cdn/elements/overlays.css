@@ -2,14 +2,13 @@
   opacity: 0;
   visibility: hidden;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--on-background);
+  inset: 0 auto auto 0;
+  inline-size: 100%;
+  block-size: 100%;
+  color: var(--on-surface);
   background-color: var(--overlay);
   z-index: 100;
-  transition: var(--speed3) all, 0s background-color;
+  transition: all var(--speed3), 0s background-color;
 }
 
 nav > .overlay {

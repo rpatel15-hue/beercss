@@ -41,11 +41,17 @@
       )
       span text
     label.radio
+      input(type="radio", name="type-inputs", @click="domain.updateFieldType('#inputs .field', 'number')")
+      span number
+    label.radio
       input(type="radio", name="type-inputs", @click="domain.updateFieldType('#inputs .field', 'password')")
       span password
     label.radio
       input(type="radio", name="type-inputs", @click="domain.updateFieldType('#inputs .field', 'file')")
       span file
+    label.radio
+      input(type="radio", name="type-inputs", @click="domain.updateFieldType('#inputs .field', 'color')")
+      span color
     label.radio
       input(type="radio", name="type-inputs", @click="domain.updateFieldType('#inputs .field', 'date')")
       span date
@@ -113,17 +119,53 @@
         img.circle(:src="'/favicon.png'")
     .s12.l4
       .field.border.prefix
-        a.loader
+        progress.circle
         input(type="text")
     .s12.l4
       .field.border.suffix
         input(type="text")
-        a.loader
+        progress.circle
     .s12.l4
       .field.border.prefix.suffix
-        a.loader
+        progress.circle
         input(type="text")
-        a.loader
+        progress.circle
+  .medium-space
+  h6
+    span Custom inputs
+    a.chip.circle(@click="domain.showSamples(data, '#inputs-custom nav > *', 'Custom inputs', null, null)")
+      i code
+  .medium-space
+  #inputs-custom
+    nav.wrap
+      button.circle
+        i attach_file
+        input(type="file")
+      button.circle
+        i palette
+        input(type="color")
+      button.circle
+        i today
+        input(type="date")
+      button.circle
+        i schedule
+        input(type="time")
+      button
+        i attach_file
+        span File
+        input(type="file")
+      button
+        i palette
+        span Color
+        input(type="color")
+      button
+        i today
+        span Date
+        input(type="date")
+      button
+        i schedule
+        span Time
+        input(type="time")
 </template>
 
 <script setup lang="ts">

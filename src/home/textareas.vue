@@ -16,22 +16,28 @@
       input(type="checkbox", @click="domain.updateFill('#textareas .field', $event)")
       span fill
     label.radio
-      input(type="radio", name="size-textareas", @click="domain.updateSize('#textareas .field', 'small')")
+      input(type="radio", name="size-textareas", @click="updateSize('#textareas .field', 'small')")
       span small
     label.radio
       input(
         type="radio",
         name="size-textareas",
         checked,
-        @click="domain.updateSize('#textareas .field')"
+        @click="updateSize('#textareas .field')"
       )
       span medium
     label.radio
-      input(type="radio", name="size-textareas", @click="domain.updateSize('#textareas .field', 'large')")
+      input(type="radio", name="size-textareas", @click="updateSize('#textareas .field', 'large')")
       span large
     label.radio
-      input(type="radio", name="size-textareas", @click="domain.updateSize('#textareas .field', 'extra')")
+      input(type="radio", name="size-textareas", @click="updateSize('#textareas .field', 'extra')")
       span extra
+    label.radio
+      input(type="radio", name="minmax-textareas", @click="updateMinMax('#textareas .field', '')", checked)
+      span max
+    label.radio
+      input(type="radio", name="minmax-textareas", @click="updateMinMax('#textareas .field', 'min')")
+      span min
   .space
   .grid
     .s12.l4
@@ -93,20 +99,30 @@
         img.circle(:src="'/favicon.png'")
     .s12.l4
       .field.textarea.border.prefix
-        a.loader
+        progress.circle
         textarea
     .s12.l4
       .field.textarea.border.suffix
         textarea
-        a.loader
+        progress.circle
     .s12.l4
       .field.textarea.border.prefix.suffix
-        a.loader
+        progress.circle
         textarea
-        a.loader
+        progress.circle
 </template>
 
 <script setup lang="ts">
 import domain from "./domain";
 import data from "./data";
+
+function updateMinMax (selector: string, css: string) {
+  domain.updateMinMax(selector, css);
+  ui();
+}
+
+function updateSize (selector: string, css: string) {
+  domain.updateSize(selector, css);
+  ui();
+}
 </script>

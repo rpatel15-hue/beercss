@@ -1,16 +1,16 @@
 <p align="center">
-    <a href="https://www.beercss.com" target="_blank" rel="noopener noreferrer"><img src="https://www.beercss.com/logo.png" alt="Beercss logo"></a>
+    <a href="https://www.beercss.com" target="_blank" rel="noopener noreferrer"><img src="https://www.beercss.com/logo.png" alt="Beer CSS logo"></a>
 </p>
 <p align="center">
     <a href="https://github.com/beercss/beercss/blob/main/LICENSE"><img src="https://img.shields.io/github/license/beercss/beercss" alt="License"></a>
-    <img src="https://img.shields.io/jsdelivr/npm/hy/beercss" alt="Downloads">
-    <a href="https://bundlephobia.com/package/beercss"><img src="https://badgen.net/bundlephobia/minzip/beercss" alt="Size"></a>
+    <a href="https://github.com/beercss/beercss"><img src="https://img.shields.io/jsdelivr/npm/hy/beercss" alt="Downloads"></a>
+    <a href="https://bundlephobia.com/package/beercss" target="_blank"><img src="https://img.shields.io/bundlephobia/minzip/beercss" alt="minzipped size"></a>
     <a href="https://www.npmjs.com/package/beercss"><img src="https://img.shields.io/npm/v/beercss" alt="Version"></a>
     <a href="https://github.com/beercss/beercss/pulls"><img src="https://img.shields.io/github/issues-pr/beercss/beercss" alt="Pull Request"></a>
     <a href="https://github.com/beercss/beercss/issues"><img src="https://img.shields.io/github/issues/beercss/beercss" alt="Issues"></a>
 </p>
 
-# Beercss
+# Beer CSS
 
 Build material design interfaces in record time...
 
@@ -18,22 +18,28 @@ Build material design interfaces in record time...
 
 Cheers, www.beercss.com
 
-## Why? ##
+# Sponsors
 
-- It's based on latest material design patterns.
-- It's themeable.
-- **It has zero dependencies.**
-- It does a lot of combinations.
-- It's easy to work with Vue, React, Angular, Svelte and others.
-- **It has about 10kb.**
-- **It has the most simple html output around.**
-- It does not need tons of documentation to explain it.
-- It's fast to learn, read and write code.
-- **It's like pure malt beer, only native and standard code.**
-- No tricks, no build steps and no abstraction layers to try reduce your final code.
-- It's well designed and we hope that you can do a lot with it.
+Beer CSS is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome sponsors and backers. If you'd like to join them, please consider sponsoring Beer CSS's development.
 
-## Applying "the beer way" in css?
+### Open Collective sponsors
+<p><a href="https://opencollective.com/beercss#support"><img src="https://opencollective.com/beercss/sponsors.svg?avatarHeight=56&button=false" alt="Sponsors"></a></p>
+<p><a href="https://opencollective.com/beercss#support"><img src="https://opencollective.com/beercss/backers.svg?avatarHeight=40&button=false" alt="Backers"></a></p>
+
+### Github sponsors
+<p><a href="https://github.com/sponsors/beercss"><img src="https://avatars.githubusercontent.com/u/74856856?s=40&v=4" alt="Sponsors"></a></p>
+
+# Why?
+
+- 🥇 The first CSS framework based on Material Design 3.
+- ⬇️ 10x smaller than others CSS frameworks based on Material Design.
+- 🧙‍♂️ Translates Material Design to HTML semantic standard.
+- 🤓 Ready to use with any JS framework.
+- 🪄 Highly focused on DX.
+- 🚫 No build steps, configurations or dependencies.
+- ✨ Build modern interfaces without any custom CSS.
+
+# Applying "the beer way" in css?
 
 This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebot"** created in 1516. This law states that beer should only be brewed with the following ingredients: **water**, **barley malt** and **hops**. Only 3 ingredients. Exciting, right? So we thinking about It and our 3 ingredients are: **settings**, **elements** and **helpers**. This sounds weird at first time, because It's not BEM, OOCSS, SMACSS, ITCSS, "Utility first" or any other approach. Our approach doesn't avoid some bad practices, but is lightweight, tasty and pure like a beer. Just try it and feel it! 😁
 
@@ -52,12 +58,11 @@ This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebo
 |---------------|
 ```
 
-### DO:
+### ✅ DO:
 
 ```
 // 1 setting to 1 document
-<body class="light">...</body>
-<body class="dark">...</body>
+<body class="dark|light">...</body>
 
 // 1 element to N helpers
 <element class="helper helper">...</element>
@@ -65,19 +70,13 @@ This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebo
 
 // nav elements before all others
 <body>
-  <nav class="left m l">...</nav>
-  <nav class="bottom s">...</nav>
-  <header class="responsive">...</header>
-  <main class="responsive">...</main>
-  <footer class="responsive">...</footer>
+  <nav class="left|right|top|bottom">...</nav>
+  ...
 </body>
 
 <div id="app">
-  <nav class="left m l">...</nav>
-  <nav class="bottom s">...</nav>
-  <header class="responsive">...</header>
-  <main class="responsive">...</main>
-  <footer class="responsive">...</footer>
+  <nav class="left|right|top|bottom">...</nav>
+  ...
 </div>
 
 // write css like this
@@ -86,7 +85,7 @@ This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebo
 .element > .helper {...}
 ```
 
-### DON'T:
+### 🚫 DON'T:
 
 ```
 // N elements to 1 tag
@@ -101,26 +100,14 @@ This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebo
 
 // nav elements after all others
 <body>
-  <header class="responsive">...</header>
-  <main class="responsive">...</main>
-  <footer class="responsive">...</footer>
-  <nav class="left m l">...</nav>
-  <nav class="bottom s">...</nav>
+  ...
+  <nav class="left|right|top|bottom">...</nav>
 </body>
 
 <div id="app">
-  <header class="responsive">...</header>
-  <main class="responsive">...</main>
-  <footer class="responsive">...</footer>
-  <nav class="left m l">...</nav>
-  <nav class="bottom s">...</nav>
-</div>
-
-<main class="responsive">
-  <nav class="left m l">...</nav>
-  <nav class="bottom s">...</nav>
   ...
-</main>
+  <nav class="left|right|top|bottom">...</nav>
+</div>
 
 // write css like this
 .element.element {...}
@@ -128,16 +115,28 @@ This project was guided by the **"Germany Beer Purity Law"** or **"Reinheitsgebo
 .element .helper {...}
 ```
 
-## Get started
+# Get started
 
 ### CDN
 
 From jsdelivr.net.
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/beercss@2.3.0/dist/cdn/beer.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/beercss@2.3.0/dist/cdn/beer.min.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@0.0.10/dist/cdn/material-dynamic-colors.min.js" type="text/javascript"></script>
+// with html
+<link href="https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.css" rel="stylesheet" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.1/dist/cdn/material-dynamic-colors.min.js"></script>
+```
+
+```css
+// with css
+@import "https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.css";
+```
+
+```js
+// with javascript
+import "https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.js";
+import "https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.1/dist/cdn/material-dynamic-colors.min.js";
 ```
 
 ### NPM
@@ -151,30 +150,91 @@ npm i material-dynamic-colors
 ```
 
 ```js
-// importing
+// importing as window.beercss and window.materialDynamicColors
 import "beercss";
 import "material-dynamic-colors";
 ```
 
+```js
+// importing as beercss and materialDynamicColors
+import beercss from "beercss";
+import materialDynamicColors from "material-dynamic-colors";
+```
+
+```js
+// importing manually from dist
+import "beercss/dist/cdn/beer.min.css";
+import beercss from "beercss/dist/cdn/beer.min.js";
+import materialDynamicColors from "material-dynamic-colors/dist/cdn/material-dynamic-colors.min.js";
+```
+
+```js
+// importing manually from src
+import "beercss/src/cdn/beer.css";
+import beercss from "beercss/src/cdn/beer.ts";
+import materialDynamicColors from "material-dynamic-colors/src/cdn/material-dynamic-colors.js";
+```
+
 ### HTML
 
-You can use this html to setup your project. See on [Codepen](https://codepen.io/leo-bnu/pen/yLKLPxj).
+You can use this html to setup your project. See on [Codepen](https://codepen.io/leo-bnu/pen/yLKLPxj). More about in [Main layout](docs/MAIN_LAYOUT.md).
 
 ```html
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google" content="notranslate">
     <title>Hello world</title>
-    <link href="https://cdn.jsdelivr.net/npm/beercss@2.3.0/dist/cdn/beer.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/beercss@2.3.0/dist/cdn/beer.min.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@0.0.10/dist/cdn/material-dynamic-colors.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.css" rel="stylesheet">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.5.8/dist/cdn/beer.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.1/dist/cdn/material-dynamic-colors.min.js"></script>
   </head>
-  <body class="light">
-    <nav class="left m l">
-      <img src="https://www.beercss.com/favicon.png" class="circle margin">
+  <body class="dark">
+    <nav class="left drawer l">
+      <header>
+        <nav>
+          <img src="https://www.beercss.com/favicon.png" class="circle">
+          <h6>Cheers</h6>
+        </nav>
+      </header>
+      <a>
+        <i>home</i>
+        <div>Home</div>
+      </a>
+      <a>
+        <i>search</i>
+        <div>Search</div>
+      </a>
+      <a>
+        <i>share</i>
+        <div>Share</div>
+      </a>
+      <a>
+        <i>more_vert</i>
+        <div>More</div>
+      </a>
+      <div class="divider"></div>
+      <label>Label</label>
+      <a>
+        <i>widgets</i>
+        <div>Widgets</div>
+      </a>
+      <a>
+        <i>chat</i>
+        <div>Chat</div>
+      </a>
+      <a>
+        <i>help</i>
+        <div>Help</div>
+      </a>  
+    </nav>
+
+    <nav class="left m">
+      <header>
+        <img src="https://www.beercss.com/favicon.png" class="circle">
+      </header>
       <a>
         <i>home</i>
         <div>Home</div>
@@ -192,7 +252,7 @@ You can use this html to setup your project. See on [Codepen](https://codepen.io
         <div>More</div>
       </a>
     </nav>
-    
+
     <nav class="bottom s">
       <a>
         <i>home</i>
@@ -207,9 +267,9 @@ You can use this html to setup your project. See on [Codepen](https://codepen.io
         <i>more_vert</i>
       </a>
     </nav>
-    
+
     <main class="responsive">
-      <img src="https://www.beercss.com/beer-and-woman.jpg" class="responsive round">
+      <img src="https://www.beercss.com/beer-and-woman.svg" class="responsive round">
       <h3>Welcome</h3>
       <h5>The beer is ready!</h5>
     </main>
@@ -219,30 +279,23 @@ You can use this html to setup your project. See on [Codepen](https://codepen.io
 
 **We recommend use the material-dynamic-colors only when your app needs to change theme at runtime.**
 
-## Documentation
+# Documentation
 
 Complete documentation and examples available at:
 
-- **[Documentation](https://github.com/beercss/beercss/blob/main/docs/INDEX.md)**
+- **[Documentation](docs/INDEX.md)**
 - **[Codepen](https://codepen.io/collection/XydYMB)**
 - **[Homepage](https://www.beercss.com)**
 
-## Contributing guide
+# Contributing guide
 
-Hi! We are really excited that you are interested in contributing to Beercss! Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
+Hi! We are really excited that you are interested in contributing to Beer CSS! Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
-https://github.com/beercss/beercss/blob/main/CONTRIBUTING.md
+[Beer CSS Contributing Guidelines](CONTRIBUTING.md)
 
-## License
+# License
 
 [MIT](https://opensource.org/licenses/MIT)
 
-## Cheers to all people here 🍻
+# Cheers to all people here 🍻
 [![Stargazers repo roster for @beercss/beercss](https://reporoster.com/stars/notext/beercss/beercss)](https://github.com/beercss/beercss/stargazers)
-
-## Supporting us
-
-Beercss is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome backers. If you'd like to join them, please consider:
-
-- [Become a backer or sponsor on Patreon](https://www.patreon.com/beercss).
-- [Become a backer or sponsor on Open Collective](https://www.opencollective.com/beercss).

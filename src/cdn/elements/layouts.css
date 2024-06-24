@@ -6,116 +6,82 @@
   position: fixed;
 }
 
-.absolute.left.right,
-.fixed.left.right {
-  width: auto;
+:is(.absolute, .fixed).left.right {
+  inline-size: auto;
 }
 
-.absolute.left.right.small,
-.fixed.left.right.small {
-  height: 320rem;
+:is(.absolute, .fixed).left.right.small {
+  block-size: 20rem;
 }
 
-.absolute.left.right.medium,
-.fixed.left.right.medium {
-  height: 448rem;
+:is(.absolute, .fixed).left.right.medium {
+  block-size: 28rem;
 }
 
-.absolute.left.right.large,
-.fixed.left.right.large {
-  height: 704rem;
+:is(.absolute, .fixed).left.right.large {
+  block-size: 44rem;
 }
 
-.absolute.top.bottom.small,
-.fixed.top.bottom.small {
-  width: 320rem;
+:is(.absolute, .fixed).top.bottom.small {
+  inline-size: 20rem;
 }
 
-.absolute.top.bottom.medium,
-.fixed.top.bottom.medium {
-  width: 448rem;
+:is(.absolute, .fixed).top.bottom.medium {
+  inline-size: 28rem;
 }
 
-.absolute.top.bottom.large,
-.fixed.top.bottom.large {
-  width: 704rem;
+:is(.absolute, .fixed).top.bottom.large {
+  inline-size: 44rem;
 }
 
 header,
 footer {
-  padding: 0 16rem;
-  background-color: var(--surface);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-block-size: 4rem;
+  padding: 0 1rem;
+  background-color: var(--surface-container);
 }
 
-header.fixed,
-footer.fixed {
-  position: sticky;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+main ~ footer {
+  min-block-size: 5rem;
+}
+
+:is(header, footer).fixed.responsive {
   z-index: 12;
-  background-color: inherit;
-  border-radius: 0;
 }
 
-header.fixed::before,
-footer.fixed:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0 -8rem;
-  max-width: 100%;
+:is(header, footer, menu > *).fixed {
+  position: sticky;
+  inset: 0;
+  z-index: 11;
   background-color: inherit;
 }
 
-.modal > header,
-.modal > footer {
+:is(dialog, menu, nav, article) > :is(header, footer) {
+  background-color: inherit;
   padding: 0;
 }
 
-article > header,
-article > footer {
-  padding: inherit;
-  padding-left: 0;
-  padding-right: 0;
-  z-index: 11 !important;
+:is(dialog, article, [class*=padding]) > :is(header, footer).fixed {
+  ---translateY: 1rem;
+
+  transform: translateY(var(---translateY));
 }
 
-.modal > header.fixed,
-article > header.fixed,
-.padding > header.fixed,
-.medium-padding > header.fixed {
-  transform: translateY(-16rem);
+:is(dialog, article, [class*=padding]) > header.fixed {
+  transform: translateY(calc(-1 * var(---translateY)));
 }
 
-.modal > footer.fixed,
-article > footer.fixed,
-.padding > footer.fixed,
-.medium-padding > footer.fixed {
-  transform: translateY(16rem);
-}
-
-.no-padding > header.fixed,
-.no-padding > footer.fixed {
+.no-padding > :is(header, footer).fixed {
   transform: none;
 }
 
-.small-padding > header.fixed {
-  transform: translateY(-8rem);
+.small-padding > :is(header, footer).fixed {
+  ---translateY: 0.5rem;
 }
 
-.small-padding > footer.fixed {
-  transform: translateY(8rem);
-}
-
-.large-padding > header.fixed {
-  transform: translateY(-24rem);
-}
-
-.large-padding > footer.fixed {
-  transform: translateY(24rem);
+:is(.large-padding, dialog:not(.left, .right, .top, .bottom)) > :is(header, footer).fixed {
+  ---translateY: 1.5rem;
 }

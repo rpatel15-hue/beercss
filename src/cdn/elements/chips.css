@@ -1,50 +1,52 @@
 .chip {
-  box-sizing: content-box;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 40rem;
-  min-width: 40rem;
-  font-size: 14rem;
+  block-size: 2rem;
+  min-inline-size: 2rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: var(--on-secondary);
-  padding: 0 16rem;
-  background-color: var(--secondary);
-  margin: 0 8rem;
+  background-color: transparent;
+  border: 0.0625rem solid var(--outline);
+  color: var(--on-surface-variant);
+  padding: 0 1rem;
+  margin: 0 0.5rem;
   text-transform: none;
-  border-radius: 8rem;
-  transition: var(--speed3) transform, var(--speed3) border-radius, var(--speed3) padding;
+  border-radius: 0.5rem;
+  transition: transform var(--speed3), border-radius var(--speed3), padding var(--speed3);
   user-select: none;
-  gap: 16rem;
+  gap: 1rem;
+  line-height: normal;
 }
 
-.chip.small {
-  height: 32rem;
-  min-width: 32rem;
+.chip.fill:hover {
+  box-shadow: var(--elevate1);
+}
+
+.chip.medium {
+  block-size: 2.5rem;
+  min-inline-size: 2.5rem;
 }
 
 .chip.large {
-  height: 48rem;
-  min-width: 48rem;
-}
-
-.chip.border {
-  border: 1rem solid var(--secondary);
-  color: var(--secondary);
-}
-
-.chip.circle {
-  border-radius: 40rem;
-  padding: 0;
-}
-
-.chip.square {
-  border-radius: 0;
-  padding: 0;
+  block-size: 3rem;
+  min-inline-size: 3rem;
 }
 
 .chip.fill {
   background-color: var(--secondary-container) !important;
-  color: var(--on-secondary-container) !important;
   border: none;
+}
+
+.chip.round.small {
+  border-radius: 1rem;
+}
+
+.chip.round {
+  border-radius: 1.25rem;
+}
+
+.chip.round.large {
+  border-radius: 1.5rem;
 }

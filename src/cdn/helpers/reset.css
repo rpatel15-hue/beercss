@@ -10,20 +10,21 @@
 }
 
 body {
-  color: var(--on-background);
-  background-color: var(--body);
+  color: var(--on-surface);
+  background-color: var(--surface);
   overflow-x: hidden;
 }
 
 label {
-  font-size: 12rem;
+  font-size: 0.75rem;
   vertical-align: baseline;
 }
 
 a,
 b,
 i,
-span {
+span,
+strong {
   vertical-align: bottom;
 }
 
@@ -38,4 +39,30 @@ button,
   font-family: inherit;
   outline: inherit;
   justify-content: center;
+}
+
+a,
+button,
+.button,
+i,
+label {
+  user-select: none;
+}
+
+body ::-webkit-scrollbar,
+body ::-webkit-scrollbar-thumb,
+body ::-webkit-scrollbar-button {
+  background: none;
+  inline-size: 0.4rem;
+  block-size: 0.4rem;
+}
+
+body :is(:hover,:focus)::-webkit-scrollbar-thumb {
+  background: var(--outline);
+  border-radius: 1rem;
+}
+
+pre,
+code {
+  direction: ltr;
 }

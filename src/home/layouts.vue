@@ -97,145 +97,34 @@ div
           footer.fixed
             h5.no-margin Fixed footer
   .medium-space
-  #list
-    h6
-      span Lists
-      a.chip.circle(@click="domain.showSamples(data, '#list .row', 'Lists')")
-        i code
-    nav.wrap
-      label.radio
-        input(type="radio", name="align-lists", @click="domain.updateVerticalAlign('#list .row', 'top-align')")
-        span top-align
-      label.radio
-        input(
-          type="radio",
-          name="align-lists",
-          checked,
-          @click="domain.updateVerticalAlign('#list .row')"
-        )
-        span middle-align
-      label.radio
-        input(type="radio", name="align-lists", @click="domain.updateVerticalAlign('#list .row', 'bottom-align')")
-        span bottom-align
-    .row
-      span Today
-    .row
-      i.light-green-text check_circle
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      i.orange-text warning
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      i.grey-text schedule
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .row
-      span Yesterday
-    .row
-      label.checkbox
-        input(type="checkbox")
-        span
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      label.checkbox
-        input(type="checkbox")
-        span
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      label.checkbox
-        input(type="checkbox")
-        span
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .row
-      span Older
-    .row
-      img.circle.tiny(:src="'/beer-and-woman.jpg'")
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      img.circle.tiny(:src="'/beer-and-woman.jpg'")
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-    .small-divider
-    .row
-      img.circle.tiny(:src="'/beer-and-woman.jpg'")
-      .max
-        h6 Title
-        p Some text here
-      button.none Button
-      button.none
-        i more_vert
-  .medium-space
   #empty-state
     h6
       span Empty states
-      a.chip.circle(@click="domain.showSamples(data, '#empty-state .fill', 'Empty states')")
+      a.chip.circle(@click="domain.showSamples(data, '#empty-state article', 'Empty states')")
         i code
     .grid
-      .s12.m12.l4
-        .fill.medium-height.middle-align.center-align
-          .center-align
+      .s12.m12.l6
+        article.medium.middle-align.center-align
+          div
             i.extra mail
             h5 You have no new messages
             p Click the button to start a conversation
             .space
             nav.center-align
-              button.round Send a message
-      .s12.m12.l4
-        .fill.medium-height.middle-align.center-align
-          .center-align
+              button Send a message
+      .s12.m12.l6
+        article.medium.middle-align.center-align
+          div
             i.extra mail
             h5 You've successfully signed up
             p Click the button to invite your friends
             .space
             nav.center-align
               button.border.round Skip
-              button.round Invite your friends
-      .s12.m12.l4
-        .fill.medium-height.middle-align.center-align
-          .center-align
+              button Invite your friends
+      .s12.m12.l6
+        article.medium.middle-align.center-align
+          div
             i.extra person
             h5 You are not following anyone
             p Start to meet new friends
@@ -244,6 +133,83 @@ div
               .max.field.border.left-round
                 input
               button.large.right-round Search
+  .medium-space
+  h6
+    span Blurred elements
+    a.chip.circle(@click="domain.showSamples(data, '#blurs > header, #blurs > article, #blurs > nav > *', 'Blurred elements')")
+      i code
+  nav.wrap
+    label.radio
+      input(type="radio", name="blur-elements", @click="domain.updateBlur('#blurs > header, #blurs > article, #blurs > nav > *', 'small-blur')")
+      span small-blur
+    label.radio
+      input(
+        type="radio",
+        name="blur-elements",
+        checked,
+        @click="domain.updateBlur('#blurs > header, #blurs > article, #blurs > nav > *', 'blur')"
+      )
+      span medium-blur
+    label.radio
+      input(type="radio", name="blur-elements", @click="domain.updateBlur('#blurs > header, #blurs > article, #blurs > nav > *', 'large-blur')")
+      span large-blur
+  .medium-space
+  #blurs.large-padding(style="background-image: url(beer-and-woman.svg)")
+    header.blur
+      nav
+        button.circle.transparent
+          i arrow_back
+        h5.max App bar
+        button.circle.transparent
+          i more_vert
+    article.blur
+      h5 Card
+      p Some text here
+      nav.right-align
+        button Button
+    nav
+      button.blur Button
+      a.chip.blur Chip
+  .medium-space
+  h6
+    span Shadowed elements
+    a.chip.circle(@click="domain.showSamples(data, '#shadows > header, #shadows > article, #shadows > nav > *', 'Shadowed elements')")
+      i code
+  nav.wrap
+    label.radio
+      input(
+        type="radio",
+        name="shadow-elements",
+        checked,
+        @click="domain.updateShadow('#shadows > header, #shadows > article, #shadows > nav > *', 'left-shadow')"
+      )
+      span left-shadow
+    label.radio
+      input(type="radio", name="shadow-elements", @click="domain.updateShadow('#shadows > header, #shadows > article, #shadows > nav > *', 'right-shadow')")
+      span right-shadow
+    label.radio
+      input(type="radio", name="shadow-elements", @click="domain.updateBlur('#shadows > header, #shadows > article, #shadows > nav > *', 'top-shadow')")
+      span top-shadow
+    label.radio
+      input(type="radio", name="shadow-elements", @click="domain.updateShadow('#shadows > header, #shadows > article, #shadows > nav > *', 'bottom-shadow')")
+      span bottom-shadow
+  .medium-space
+  #shadows.large-padding(style="background-image: url(beer-and-woman.svg)")
+    header.white-text.left-shadow
+      nav
+        button.circle.transparent
+          i arrow_back
+        h5.max App bar
+        button.circle.transparent
+          i more_vert
+    article.white-text.left-shadow
+      h5 Card
+      p Some text here
+      nav.right-align
+        button Button
+    nav
+      button.white-text.left-shadow Button
+      a.chip.white-text.left-shadow Chip
 </template>
 
 <script setup lang="ts">

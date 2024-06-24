@@ -4,28 +4,25 @@ import vue from "@vitejs/plugin-vue";
 (async () => {
   const server = await createServer({
     publicDir: "./src/static",
-    plugins: [vue({
-      reactivityTransform: true
-    })],
+    plugins: [vue()],
     build: {
       rollupOptions: {
         input: {
-          app: "./index.html"
+          app: "./index.html",
         },
         output: {
           entryFileNames: "[name].js",
           chunkFileNames: "[name].js",
           assetFileNames: "[name].[ext]",
-          manualChunks: undefined
-        }
-      }
+          manualChunks: undefined,
+        },
+      },
     },
     server: {
-      open: '/'
-    }
+      open: "/",
+    },
   });
 
-  
   await server.listen();
 
   server.printUrls();

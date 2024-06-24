@@ -45,6 +45,12 @@
     label.radio
       input(type="radio", name="direction-tabs", @click="domain.updateDirection('#tabs .tabs > a', 'vertical')")
       span vertical
+    label.radio
+      input(type="radio", name="size-tabs", @click="domain.updateMinMax('#tabs .tabs', 'min')")
+      span min
+    label.radio
+      input(type="radio", name="size-tabs", @click="domain.updateMinMax('#tabs .tabs', '')", checked)
+      span max
   p.space
   div
     .tabs
@@ -76,7 +82,7 @@
       h5 Tab 3
   div
     .tabs
-      a.active(data-ui="#tab7") 
+      a.active(data-ui="#tab7")
         img.circle(:src="'/favicon.png'")
         span Tab 1
       a(data-ui="#tab8")

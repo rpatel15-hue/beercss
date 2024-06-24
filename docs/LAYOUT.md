@@ -78,7 +78,7 @@ Headers and footers are `position: sticky` when `fixed`.
   <p>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   </p>
-  <footer class="fixed bold">Fixed footer</header>
+  <footer class="fixed bold">Fixed footer</footer>
 </article>
 ```
 
@@ -88,7 +88,7 @@ Headers and footers are `position: sticky` when `fixed`.
 <header class="primary">
   <nav>
     <button class="circle transparent">
-      <i>arrow_backward</i>
+      <i>arrow_back</i>
     </button>
     <h5>Title large</h5>
     <div class="max"></div>
@@ -111,7 +111,7 @@ Headers and footers are `position: sticky` when `fixed`.
 <footer>
   <nav>
     <button class="circle transparent">
-      <i>check_box_filled</i>
+      <i>check_box</i>
     </button>
     <button class="circle transparent">
       <i>brush</i>
@@ -137,16 +137,22 @@ Headers and footers are `position: sticky` when `fixed`.
   <a>
     <i>warning</i>
   </a>
-  <div class="max">
-    <div>Title</div>
-    <div class="small-text">Some text here</div>
-  </div>
+  <div class="max">Some text here</div>
   <a>
     <i>edit</i>
   </a>
   <a>
     <i>delete</i>
   </a>
+</div>
+```
+
+## Clickable list example
+
+```html
+<a class="row wave">
+  <i>home</i>
+  <div>Item</div>
 </div>
 ```
 
@@ -169,4 +175,4 @@ Headers and footers are `position: sticky` when `fixed`.
 
 [Begin](INDEX.md), [Elements](ELEMENTS.md), [Helpers](HELPERS.md), [Settings](SETTINGS.md), [Summary](SUMMARY.md), [beercss.com](https://www.beercss.com)
 
-[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dropdown](DROPDOWN.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [Loader](LOADER.md), [Media](MEDIA.md), [Modal](MODAL.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Toast](TOAST.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)
+[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dialog](DIALOG.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [List](LIST.md), [Main layout](MAIN_LAYOUT.md), [Media](MEDIA.md), [Menu](MENU.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Slider](SLIDER.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Snackbar](SNACKBAR.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)

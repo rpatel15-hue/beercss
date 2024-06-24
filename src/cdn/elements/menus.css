@@ -1,0 +1,107 @@
+menu > li {
+  all: unset;
+}
+
+menu {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  box-shadow: var(--elevate2);
+  background-color: var(--surface-container);
+  z-index: 11;
+  inset: auto auto 0 0;
+  inline-size: 100%;
+  max-block-size: 50vh;
+  max-inline-size: none !important;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 0.875rem;
+  font-weight: normal;
+  text-transform: none;
+  color: var(--on-surface);
+  line-height: normal;
+  text-align: start;
+  border-radius: 0.25rem;
+  transform: scale(0.8) translateY(120%);
+  transition: all var(--speed2), 0s background-color;
+}
+
+[dir=rtl] menu {
+  inset: auto 0 0 auto;
+}
+
+menu.no-wrap {
+  inline-size: max-content;
+  white-space: nowrap !important;
+}
+
+menu.active,
+menu:not([data-ui]):active,
+:not([data-ui]):focus-within > menu {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(100%);
+}
+
+menu * {
+  white-space: inherit !important;
+}
+
+menu > a,
+menu > li > a {
+  padding: 0.5rem 1rem;
+  min-block-size: 3rem;
+  flex: 1;
+}
+
+menu > a:not(.row),
+menu > li > a:not(.row) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+menu > a:is(:hover, :focus, .active),
+menu > li > a:is(:hover, :focus, .active) {
+  background-color: var(--active);
+}
+
+menu.min {
+  inset: 0 0 auto 0;
+  transform: none !important;
+  border-radius: inherit;
+}
+
+[dir=rtl] menu.min.right,
+menu.min.left {
+  inset: 0 0 auto auto;
+}
+
+[dir=rtl] menu.min.left,
+menu.min.right {
+  inset: 0 auto auto 0;
+}
+
+menu.max {
+  position: fixed;
+  inset: 0;
+  block-size: 100%;
+  max-block-size: none;
+  min-block-size: auto;
+  z-index: 100;
+  transform: none !important;
+}
+
+menu.no-wrap:is(.min, .max) {
+  min-inline-size: 16rem;
+}
+
+[dir=rtl] menu.right,
+menu.left {
+  inset: auto 0 0 auto;
+}
+
+[dir=rtl] menu.left,
+menu.right {
+  inset: auto auto 0 0;
+}

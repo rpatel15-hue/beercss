@@ -8,12 +8,12 @@
         h5.bold Started in 1983
         div Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         nav
-          button.large.white.black-text 
+          button.small-round.large.white.black-text
             i play_arrow
-            span &nbsp;Watch
-          button.large.border.white-border.white-text
-            i info_outline
-            span &nbsp;More info
+            span Watch
+          button.small-round.large.border.white-border.white-text
+            i info
+            span More info
   main.responsive.max
     .page.right.active
       .large-space
@@ -72,9 +72,9 @@ import data from "./data";
 
 const showDetails = (event:any) => {
   event.currentTarget.querySelector(".page").className = "page right active";
-}
+};
 
 const hideDetails = (event:any) => {
   event.currentTarget.querySelector(".page").className = "page right";
-}
+};
 </script>

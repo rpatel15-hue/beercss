@@ -9,19 +9,19 @@
   h6.middle-align
     span Chips
   nav.scroll
-    a.chip.border Suggestion
-    a.chip.border Suggestion
+    a.chip Suggestion
+    a.chip Suggestion
     a.chip.fill Selected
     a.chip.fill Selected
-    a.chip.border Suggestion
+    a.chip Suggestion
     a.chip.fill Selected
-    a.chip.border Suggestion
-    a.chip.border Suggestion
-    a.chip.border Suggestion
-    a.chip.border Suggestion
-    a.chip.border Suggestion
-    a.chip.border Suggestion
-    
+    a.chip Suggestion
+    a.chip Suggestion
+    a.chip Suggestion
+    a.chip Suggestion
+    a.chip Suggestion
+    a.chip Suggestion
+
   .medium-space
   h6.middle-align
     span Images
@@ -36,7 +36,7 @@
       p Some text here
       .space
       nav
-        button.round Button
+        button Button
 
 </template>
 

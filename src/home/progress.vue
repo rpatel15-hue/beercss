@@ -3,14 +3,14 @@
   .large-space
   h4
     span Progress
-    a.chip.circle(@click="domain.showSamples(data, '#progress .small-space, #progress article, #progress nav > button, #progress nav > .chip', 'Progress', null, 'https://github.com/beercss/beercss/blob/main/docs/PROGRESS.md')")
+    a.chip.circle(@click="domain.showSamples(data, '#default-progress progress, #custom-progress article, #custom-progress nav > button, #custom-progress nav > .chip', 'Progress', null, 'https://github.com/beercss/beercss/blob/main/docs/PROGRESS.md')")
       i code
   nav.wrap
     label.radio
-      input(type="radio", name="percent-progress", checked, @click="domain.updateProgress(0)")
+      input(type="radio", name="percent-progress", @click="domain.updateProgress(0)")
       span 0%
     label.radio
-      input(type="radio", name="percent-progress", @click="domain.updateProgress(30)")
+      input(type="radio", name="percent-progress", checked, @click="domain.updateProgress(30)")
       span 30%
     label.radio
       input(type="radio", name="percent-progress", @click="domain.updateProgress(60)")
@@ -19,68 +19,52 @@
       input(type="radio", name="percent-progress", @click="domain.updateProgress(100)")
       span 100%
     label.radio
-      input(type="radio", name="color-progress", checked, @click="domain.updateColor('#progress .progress')")
+      input(type="radio", name="color-progress", checked, @click="domain.updateTextColor('#progress progress')")
       span default
     label.radio
-      input(type="radio", name="color-progress", @click="domain.updateColor('#progress .progress', 'light-green')")
+      input(type="radio", name="color-progress", @click="domain.updateTextColor('#progress progress', 'light-green-text')")
       span light-green
     label.radio
-      input(type="radio", name="color-progress", @click="domain.updateColor('#progress .progress', 'orange')")
+      input(type="radio", name="color-progress", @click="domain.updateTextColor('#progress progress', 'orange-text')")
       span orange
-  .medium-space
-  h6 Default
-  .small-space.border
-    .progress.left
-  .space
-  .small-space.border
-    .progress.right
-  .medium-space
-  h6 Cards
-  .grid
-    .s12.m6.l3
-      article.small
-        .progress.left
+  .large-space
+  #default-progress
+    h6 Linear (default)
+    .space
+    progress
+    .space
+    progress(value="30", max="100")
+    .medium-space
+    h6 Circular
+    nav
+      progress.circle.small
+      progress.circle
+      progress.circle.large
+  .large-space
+  #custom-progress
+    h6 Custom progressbar
+    .medium-space
+    nav
+      article
         h5 Card
-    .s12.m6.l3
-      article.small.round
-        .progress.right
-        h5 Card
-    .s12.m6.l3
-      article.border.small
-        .progress.top
-        h5 Card
-    .s12.m6.l3
-      article.small.border.round
-        .progress.bottom
-        h5 Card
-  .medium-space
-  h6 Buttons
-  div
-    nav.wrap
+        progress.max(value="30", max="100")
+      a.chip
+        span Chip
+        progress.max(value="30", max="100")
       button
-        .progress.left
         span Button
-      button.round
-        .progress.right
+        progress.max(value="30", max="100")
+    nav
+      article
+        h5 Card
+        progress.max.vertical(value="30", max="100")
+      a.chip
+        span Chip
+        progress.max.vertical(value="30", max="100")
+      button
         span Button
-      button.circle.extra
-        .progress.top
-        i home
-      button.square.extra
-        .progress.bottom
-        i home
-      button.border
-        .progress.left
-        span Button
-      button.border.round
-        .progress.right
-        span Button
-      button.border.circle.extra
-        .progress.top
-        i home
-      button.border.square.extra
-        .progress.bottom
-        i home
+        progress.max.vertical(value="30", max="100")
+  .space
 </template>
 
 <script setup lang="ts">

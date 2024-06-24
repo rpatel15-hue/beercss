@@ -4,6 +4,10 @@
 
 left-align, right-align, center-align, top-align, bottom-align, middle-align
 
+## Blurs
+
+blur, small-blur, medium-blur, large-blur, light, dark
+
 ## Colors
 
 amber1, amber2, amber3, amber4, amber5, amber6, amber7, amber8, amber9, amber10, amber, amber-border, amber-text
@@ -58,19 +62,19 @@ elevate, no-elevate, small-elevate, medium-elevate, large-elevate,
 
 ## Forms
 
-border, circle, square, none, fill, extend, round, no-round, no-round, left-round, right-round, top-round, bottom-round
+border, no-border, circle, square, none, fill, extend, drawer, round, no-round, small-round, medium-round, large-round, left-round, right-round, top-round, bottom-round
 
 ## Margins
 
-margin, no-margin, tiny-margin, small-margin, medium-margin, large-margin
+margin, no-margin, auto-margin, tiny-margin, small-margin, medium-margin, large-margin, left-margin, right-margin, top-margin, bottom-margin, horizontal-margin, vertical-margin
 
 ## Opacities
 
-opacity, no-opacity
+opacity, no-opacity, small-opacity, medium-opacity, large-opacity
 
 ## Paddings
 
-padding, no-padding, tiny-padding, small-padding, medium-padding, large-padding
+padding, no-padding, tiny-padding, small-padding, medium-padding, large-padding, left-padding, right-padding, top-padding, bottom-padding, horizontal-padding, vertical-padding
 
 ## Positions
 
@@ -90,7 +94,7 @@ shadow, left-shadow, right-shadow, top-shadow, bottom-shadow
 
 ## Sizes
 
-tiny, small, medium, large, extra, wrap, no-wrap, max, small-width, medium-width, large-width, small-height, medium-height, large-height
+tiny, small, medium, large, extra, wrap, no-wrap, max, auto-width, small-width, medium-width, large-width, auto-height, small-height, medium-height, large-height
 
 ## Spaces
 
@@ -109,6 +113,8 @@ tertiary, tertiary-text, tertiary-border, tertiary-container
 error, error-text, error-border, error-container
 
 background, surface, surface-variant, inverse-surface
+
+inverse-primary, inverse-primary-text, inverse-primary-border
 
 black, black-text, black-border
 
@@ -132,4 +138,4 @@ wave, no-wave, light, dark
 
 [Begin](INDEX.md), [Elements](ELEMENTS.md), [Helpers](HELPERS.md), [Settings](SETTINGS.md), [Summary](SUMMARY.md), [beercss.com](https://www.beercss.com)
 
-[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dropdown](DROPDOWN.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [Loader](LOADER.md), [Media](MEDIA.md), [Modal](MODAL.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Toast](TOAST.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)
+[Badge](BADGE.md), [Button](BUTTON.md), [Card](CARD.md), [Checkbox](CHECKBOX.md), [Chip](CHIP.md), [Container](CONTAINER.md), [Dialog](DIALOG.md), [Expansion](EXPANSION.md), [Grid](GRID.md), [Icon](ICON.md), [Input](INPUT.md), [Layout](LAYOUT.md), [List](LIST.md), [Main layout](MAIN_LAYOUT.md), [Media](MEDIA.md), [Menu](MENU.md), [Navigation](NAVIGATION.md), [Overlay](OVERLAY.md), [Page](PAGE.md), [Progress](PROGRESS.md), [Radio](RADIO.md), [Select](SELECT.md), [Slider](SLIDER.md), [Switch](SWITCH.md), [Table](TABLE.md), [Tabs](TABS.md), [Textarea](TEXTAREA.md), [Snackbar](SNACKBAR.md), [Tooltip](TOOLTIP.md), [Typography](TYPOGRAPHY.md)

@@ -1,403 +1,522 @@
-(() => {
-  if (window["ui"]) return;
+interface IBeerCssTheme {
+  dark: string,
+  light: string,
+}
 
-  interface ILastTheme {
-    dark:string,
-    light:string
+let _timeoutSnackbar: ReturnType<typeof setTimeout>;
+let _timeoutMutation: ReturnType<typeof setTimeout>;
+let _timeoutMenu: ReturnType<typeof setTimeout>;
+let _mutation: MutationObserver | null;
+const _lastTheme: IBeerCssTheme = {
+  light: "",
+  dark: "",
+};
+const _emptyNodeList = [] as unknown as NodeListOf<Element>;
+
+async function wait (milliseconds: number): Promise<Function> {
+  return await new Promise((resolve: Function) => setTimeout(resolve, milliseconds));
+}
+
+function guid (): string {
+  return "fxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c: string) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+function query (selector: string | Element | null, element?: Element | null): Element | null {
+  try {
+    return (typeof selector === "string")
+      ? (element ?? document).querySelector(selector)
+      : selector;
+  } catch {
+    return null;
+  }
+}
+
+function queryAll (selector: string | NodeListOf<Element> | null, element?: Element | null): NodeListOf<Element> {
+  try {
+    return (typeof selector === "string")
+      ? (element ?? document).querySelectorAll(selector)
+      : selector ?? _emptyNodeList;
+  } catch {
+    return _emptyNodeList;
+  }
+}
+
+function hasClass (element: Element | null, name: string): boolean {
+  return element?.classList?.contains(name) ?? false;
+}
+
+function hasTag (element: Element | null, name: string): boolean {
+  return element?.tagName?.toLowerCase() === name;
+}
+
+function hasType (element: HTMLInputElement | null, name: string): boolean {
+  return element?.type?.toLowerCase() === name;
+}
+
+function addClass (element: Element | null, name: string): void {
+  element?.classList?.add(name);
+}
+
+function removeClass (element: Element | null, name: string): void {
+  element?.classList?.remove(name);
+}
+
+function on (element: any, name: string, callback: any, useCapture: boolean = true): void {
+  element?.addEventListener(name, callback, useCapture);
+}
+
+function off (element: any, name: string, callback: any, useCapture: boolean = true): void {
+  element?.removeEventListener(name, callback, useCapture);
+}
+
+function insertBefore (newElement: Element, element: Element | null): void {
+  element?.parentNode?.insertBefore(newElement, element);
+}
+
+function prev (element: Element): Element | null {
+  return element?.previousElementSibling;
+}
+
+function next (element: Element): Element | null {
+  return element?.nextElementSibling;
+}
+
+function parent (element: Element): Element | null {
+  return element?.parentElement;
+}
+
+function create (htmlAttributesAsJson: any): HTMLElement {
+  const element = document.createElement("div");
+  for (let i = 0, keys = Object.keys(htmlAttributesAsJson), n = keys.length; i < n; i++) {
+    const key = keys[i];
+    element.setAttribute(key, htmlAttributesAsJson[key]);
+  }
+  return element;
+}
+
+function updateInput (target: Element): void {
+  const input = target as HTMLInputElement;
+  if (hasType(input, "number") && !input.value) input.value = "";
+  if (!input.placeholder) input.placeholder = " ";
+  if (target.getAttribute("data-ui")) void open(target, null);
+}
+
+function onClickElement (e: Event): void {
+  void open(e.currentTarget as HTMLElement, null, null, e);
+}
+
+function onClickLabel (e: Event): void {
+  const target = e.currentTarget as Element;
+  const parentTarget = parent(target);
+  const input = query("input:not([type=file], [type=checkbox], [type=radio]), select, textarea", parentTarget) as HTMLElement;
+  if (input) input.focus();
+}
+
+function onFocusInput (e: Event): void {
+  const target = e.currentTarget as Element;
+  updateInput(target);
+}
+
+function onBlurInput (e: Event): void {
+  const target = e.currentTarget as Element;
+  updateInput(target);
+}
+
+function onClickDocument (e: Event): void {
+  off(document.body, "click", onClickDocument);
+  const target = e.target as Element;
+  const menus = queryAll("menu.active");
+  for (let i = 0, n = menus.length; i < n; i++) menu(target, menus[i], e);
+}
+
+function onClickSnackbar (e: Event): void {
+  const target = e.currentTarget as Element;
+  removeClass(target, "active");
+
+  if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
+}
+
+function onChangeFile (e: Event): void {
+  const target = e.currentTarget as HTMLInputElement;
+  updateFile(target);
+}
+
+function onChangeColor (e: Event): void {
+  const target = e.currentTarget as HTMLInputElement;
+  updateColor(target);
+}
+
+function onKeydownFile (e: KeyboardEvent): void {
+  const target = e.currentTarget as HTMLInputElement;
+  updateFile(target, e);
+}
+
+function onKeydownColor (e: KeyboardEvent): void {
+  const target = e.currentTarget as HTMLInputElement;
+  updateColor(target, e);
+}
+
+function onInputTextarea (e: Event): void {
+  const target = e.currentTarget as Element;
+  updateTextarea(target);
+}
+
+function onMutation (): void {
+  if (_timeoutMutation) clearTimeout(_timeoutMutation);
+  _timeoutMutation = setTimeout(() => { void ui(); }, 180);
+}
+
+function updateFile (target: Element, e?: KeyboardEvent): void {
+  if (e && e.key === "Enter") {
+    const previousTarget = prev(target) as HTMLInputElement;
+    if (!hasType(previousTarget, "file")) return;
+    return previousTarget.click();
   }
 
-  let _timeoutToast:NodeJS.Timeout = null;
-  let _timeoutMutation:NodeJS.Timeout = null;
-  let _mutation:MutationObserver = null;
-  let _lastTheme:ILastTheme = {
-    light: "",
-    dark: ""
+  const currentTarget = target as HTMLInputElement;
+  const nextTarget = next(target) as HTMLInputElement;
+  if (!hasType(nextTarget, "text")) return;
+  nextTarget.value = currentTarget.files ? Array.from(currentTarget.files).map((x) => x.name).join(", ") : "";
+  nextTarget.readOnly = true;
+  on(nextTarget, "keydown", onKeydownFile, false);
+  updateInput(nextTarget);
+}
+
+function updateColor (target: Element, e?: KeyboardEvent): void {
+  if (e && e.key === "Enter") {
+    const previousTarget = prev(target) as HTMLInputElement;
+    if (!hasType(previousTarget, "color")) return;
+    return previousTarget.click();
   }
 
-  const wait = (milliseconds:number) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  const currentTarget = target as HTMLInputElement;
+  const nextTarget = next(target) as HTMLInputElement;
+  if (!hasType(nextTarget, "text")) return;
+  nextTarget.readOnly = true;
+  nextTarget.value = currentTarget.value;
+  on(nextTarget, "keydown", onKeydownColor, false);
+  updateInput(nextTarget);
+}
+
+function updateTextarea (target: Element): void {
+  const parentTarget = parent(target) as HTMLElement;
+  const currentTarget = parent(target) as HTMLElement;
+  parentTarget.removeAttribute("style");
+  if (hasClass(parentTarget, "min")) parentTarget.style.setProperty("---size", `${Math.max(target.scrollHeight, currentTarget.offsetHeight)}px`);
+}
+
+function updateRange (target: Element): void {
+  const parentTarget = parent(target) as HTMLElement;
+  const bar = query("span", parentTarget) as HTMLElement;
+  const inputs = queryAll("input", parentTarget) as NodeListOf<HTMLInputElement>;
+  if (!inputs.length || !bar) return;
+
+  const rootSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--size")) || 16;
+  const thumb = hasClass(parentTarget, "max") ? 0 : 0.25 * rootSize * 100 / inputs[0].offsetWidth;
+  const percents: Array<number> = [];
+  const values: Array<number> = [];
+  for (let i = 0, n = inputs.length; i < n; i++) {
+    const min = parseFloat(inputs[i].min) || 0;
+    const max = parseFloat(inputs[i].max) || 100;
+    const value = parseFloat(inputs[i].value) || 0;
+    const percent = (value - min) * 100 / (max - min);
+    const fix = thumb / 2 - thumb * percent / 100;
+    percents.push(percent + fix);
+    values.push(value);
   }
 
-  const guid = ():string => {
-    return "fxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c:string) => {
-      let r = (Math.random() * 16) | 0,
-        v = c == "x" ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
-  }
+  let percent = percents[0];
+  let start = 0;
+  let end = 100 - start - percent;
+  let value1 = values[0];
+  let value2 = values[1] || 0;
+  if (inputs.length > 1) {
+    percent = Math.abs(percents[1] - percents[0]);
+    start = percents[1] > percents[0] ? percents[0] : percents[1];
+    end = 100 - start - percent;
 
-  const query = (selector:string|Element, element?:Element):Element => {
-    try {
-      return typeof selector == "string"
-        ? (element || document).querySelector(selector)
-        : selector;      
-    } catch {}
-  }
-
-  const queryAll = (selector:string|NodeListOf<Element>, element?:Element) => {
-    try {
-      return typeof selector == "string"
-        ? (element || document).querySelectorAll(selector)
-        : selector;      
-    } catch {}
-  }
-
-  const hasClass = (element:Element, name:string):boolean => {
-    if (!element) return false;
-    return element.classList.contains(name);
-  }
-
-  const addClass = (element:Element, name:string) => {
-    if (!element) return;
-    element.classList.add(name);
-  }
-
-  const removeClass = (element:Element, name:string) => {
-    if (!element) return;
-    element.classList.remove(name);
-  }
-
-  const on = (element:Element, name:string, callback:any) => {
-    element.addEventListener(name, callback, true);
-  }
-
-  const off = (element:Element, name:string, callback:any) => {
-    element.removeEventListener(name, callback, true);
-  }
-
-  const insertBefore = (newElement:Element, element:Element):Element => {
-    if (!element) return;
-    return element.parentNode.insertBefore(newElement, element);
-  }
-
-  const prev = (element:Element):Element => {
-    if (!element) return;
-    return element.previousElementSibling;
-  }
-
-  const next = (element:Element):Element => {
-    if (!element) return;
-    return element.nextElementSibling;
-  }
-
-  const parent = (element:Element):Element => {
-    if (!element) return;
-    return element.parentElement;
-  }
-
-  const create = (json:any) => {
-    let element = document.createElement("div");
-
-    for (let i in json)
-      element[i] = json[i];
-
-    return element;
-  }
-
-  const updateInput = (target:Element) => {
-    let input = target as HTMLInputElement;
-    let parentTarget = parent(target);
-    let label = query("label", parentTarget) as HTMLLabelElement;
-    let isBorder = hasClass(parentTarget, "border") && !hasClass(parentTarget, "fill");
-    let toActive = document.activeElement == target || input.value || /date|time/.test(input.type);
-
-    if (toActive) {
-      if (isBorder && label) {
-        let width = hasClass(label, "active") ? label.offsetWidth : Math.round(label.offsetWidth / 1.33);
-        let start = hasClass(parentTarget, "round") ? 20 : 12;
-        let end = width + start + 8;
-        input.style.clipPath = `polygon(0% 0%, ${start}rem 0%, ${start}rem 8rem, ${end}rem 8rem, ${end}rem 0%, 100% 0%, 100% 100%, 0% 100%)`;
-      } else
-      input.style.clipPath = "";
-      addClass(label, "active");
-    } else {
-      removeClass(label, "active");
-      input.style.clipPath = "";
+    if (value2 > value1) {
+      value1 = values[1] || 0;
+      value2 = values[0];
     }
-
-    if (target.getAttribute("data-ui")) open(target);
   }
 
-  const onClickElement = (e:Event) => {
-    let target = e.currentTarget as HTMLElement;
-    if (/input/i.test(target.tagName)) return;
-    open(target);
+  parentTarget.style.setProperty("---start", `${start}%`);
+  parentTarget.style.setProperty("---end", `${end}%`);
+  parentTarget.style.setProperty("---value1", `'${value1}'`);
+  parentTarget.style.setProperty("---value2", `'${value2}'`);
+}
+
+function updateAllRanges (e?: Event) {
+  if (e) {
+    const input = e.target as HTMLInputElement;
+    if (input.type === "range") return updateRange(input);
   }
 
-  const onClickLabel = (e:Event) => {
-    let target = e.currentTarget as Element;
-    let input = query('input:not([type=file]):not([type=checkbox]):not([type=radio]), select, textarea', parent(target)) as HTMLElement;
-    if (input) input.focus();
+  const ranges = queryAll(".slider > input[type=range]") as NodeListOf<HTMLInputElement>;
+  if (!ranges.length) off(globalThis, "input", updateAllRanges, false);
+  else on(globalThis, "input", updateAllRanges, false);
+  for (let i = 0, n = ranges.length; i < n; i++) updateRange(ranges[i]);
+}
+
+async function open (from: Element, to: Element | null, options?: any, e?: Event): Promise<void> {
+  if (!to) {
+    to = query(from.getAttribute("data-ui"));
+    if (!to) return;
   }
 
-  const onFocusInput = (e:Event) => {
-    let target = e.currentTarget as Element;
-    updateInput(target);
-  }
+  if (hasTag(to, "dialog")) return await dialog(from, to);
+  if (hasTag(to, "menu")) return menu(from, to, e);
+  if (hasClass(to, "snackbar")) return snackbar(from, to, options);
+  if (hasClass(to, "page")) return page(from, to);
 
-  const onBlurInput = (e:Event) => {
-    let target = e.currentTarget as Element;
-    updateInput(target);
-  }
+  tab(from);
 
-  const onClickDocument = (e:Event) => {
-    let target = e.currentTarget as Element;
-    let dropdowns = queryAll(".dropdown.active");
-    dropdowns.forEach((x:Element) => removeClass(x, "active"));
+  if (hasClass(to, "active")) return removeClass(to, "active");
 
-    off(target, "click", onClickDocument);
-  }
+  addClass(to, "active");
+}
 
-  const onClickToast = (e:Event) => {
-    let target = e.currentTarget as Element;
-    removeClass(target, "active");
+function tab (from: Element): void {
+  if (from.id && hasClass(from, "page")) from = query(`[data-ui="#${from.id}"]`) as Element;
 
-    if (_timeoutToast) clearTimeout(_timeoutToast);
-  }
+  const container = parent(from);
+  if (!hasClass(container, "tabs")) return;
+  const tabs = queryAll("a", container);
+  for (let i = 0, n = tabs.length; i < n; i++) removeClass(tabs[i], "active");
+  addClass(from, "active");
+}
 
-  const onChangeFile = (e:Event) => {
-    let target = e.currentTarget as HTMLInputElement;
-    updateFile(target);
-  }
-
-  const onKeydownFile = (e:KeyboardEvent) => {
-    let target = e.currentTarget as HTMLInputElement;
-    updateFile(target, e);
-  }
-
-  const onMutation = () => {
-    if (_timeoutMutation) clearTimeout(_timeoutMutation);
-    _timeoutMutation = setTimeout(ui, 180);
-  }
-
-  const updateFile = (target:Element, e?:KeyboardEvent) => {
-    if (e) {
-      if (e.key !== "Enter") return;
-
-      let target = e.currentTarget as Element;
-      let nextTarget = next(target) as HTMLInputElement;
-      if (!nextTarget || !/file/i.test(nextTarget.type)) return;
-      return nextTarget.click();
-    }
-
-    let currentTarget = target as HTMLInputElement;
-    let previousTarget = prev(target) as HTMLInputElement;
-    if (!previousTarget || !/text/i.test(previousTarget.type)) return;
-    previousTarget.value = Array.from(currentTarget.files).map((x) => x.name).join(", ");
-    previousTarget.readOnly = true;
-    previousTarget.addEventListener("keydown", onKeydownFile);
-    updateInput(previousTarget);
-  }
-
-  const open = (from?:Element, to?:Element, config?:any) => {
-    if (!to) to = query(from.getAttribute("data-ui"))
-    if (hasClass(to, "modal")) return modal(from, to);
-    if (hasClass(to, "dropdown")) return dropdown(from, to);
-    if (hasClass(to, "toast")) return toast(from, to, config);
-    if (hasClass(to, "page")) return page(from, to);
-    if (hasClass(to, "progress")) return progress(to, config);
-
-    tab(from);
-
-    if (hasClass(to, "active")) return removeClass(to, "active");
-
-    addClass(to, "active");
-  }
-
-  const tab = (from:Element) => {
-    let container = parent(from);
-    if (!hasClass(container, "tabs")) return;
-
-    let tabs = queryAll("a", container);
-    tabs.forEach((x:Element) => removeClass(x, "active"));
-
-    addClass(from, "active");
-  }
-
-  const page = (from:Element, to:Element,) => {
-    tab(from);
-
-    let container = parent(to);
-    for (let i = 0; i < container.children.length; i++)
+function page (from: Element, to: Element): void {
+  tab(from);
+  const container = parent(to);
+  if (container) {
+    for (let i = 0, n = container.children.length; i < n; i++) {
       if (hasClass(container.children[i], "page")) removeClass(container.children[i], "active");
-
-    addClass(to, "active");
+    }
   }
+  addClass(to, "active");
+}
 
-  const dropdown = (from:Element, to:Element) => {
-    tab(from);
+function menu (from: Element, to: Element, e?: Event): any {
+  if (_timeoutMenu) clearTimeout(_timeoutMenu);
 
-    if (hasClass(to, "active")) return removeClass(to, "active");
-
-    let dropdowns = queryAll(".dropdown.active");
-    dropdowns.forEach((x:Element) => removeClass(x, "active"));
-
-    addClass(to, "active");
+  _timeoutMenu = setTimeout(() => {
     on(document.body, "click", onClickDocument);
-  }
-
-  const modal = async (from:Element, to:Element) => {
     tab(from);
 
-    let overlay = prev(to) as HTMLElement;
-    if (!hasClass(overlay, "overlay")) {
-      overlay = create({ className: "overlay" });
-      insertBefore(overlay, to);
-      await wait(90);
+    if (hasClass(to, "active")) {
+      if (!e) return removeClass(to, "active");
+
+      const trustedFrom = e.target as Element;
+      const trustedTo = query(trustedFrom.getAttribute("data-ui") ?? "");
+      const trustedMenu = trustedFrom.closest("menu");
+      const trustedActive = !query("menu", trustedFrom.closest("[data-ui]") ?? undefined);
+
+      if (trustedTo && trustedTo !== trustedMenu) return menu(trustedFrom, trustedTo);
+      if (!trustedTo && !trustedActive && trustedMenu) return false;
+      return removeClass(to, "active");
     }
 
-    overlay.onclick = () => {
-      removeClass(from, "active");
-      removeClass(to, "active");
-      removeClass(overlay, "active");
-    }
-
-    let isActive = hasClass(to, "active");
-    let container = parent(to);
-    if (/nav/i.test(container.tagName)) {
-      let elements = queryAll(".modal, a, .overlay", container);
-      elements.forEach((x:Element) => removeClass(x, "active"));
-    }
-
-    if (isActive) {
-      removeClass(from, "active");
-      removeClass(overlay, "active");
-      removeClass(to, "active");
-    } else {
-      if (!/button/i.test(from.tagName) && !hasClass(from, "button") && !hasClass(from, "chip")) addClass(from, "active");
-      addClass(overlay, "active");
-      addClass(to, "active");
-    }
-  }
-
-  const toast = (from:Element, to:Element, config:any) => {
-    tab(from);
-
-    let elements = queryAll(".toast.active");
-    elements.forEach((x:Element) => removeClass(x, "active"));
+    const menus = queryAll("menu.active");
+    for (let i = 0, n = menus.length; i < n; i++) removeClass(menus[i], "active");
     addClass(to, "active");
-    on(to, "click", onClickToast);
+  }, 90);
+}
 
-    if (_timeoutToast) clearTimeout(_timeoutToast);
+async function dialog (from: Element, to: Element): Promise<void> {
+  (document.activeElement as HTMLElement)?.blur();
+  tab(from);
 
-    if (config && config == -1) return;
+  let overlay = prev(to) as HTMLElement;
+  const target = to as HTMLDialogElement;
+  const isActive = hasClass(to, "active") || target.open;
+  const isModal = hasClass(to, "modal");
+  const container = parent(to);
+  const isNav = hasTag(container, "nav");
 
-    _timeoutToast = setTimeout(() => {
-      removeClass(to, "active");
-    }, config && config ? config : 6000);
+  if (!hasClass(overlay, "overlay")) {
+    overlay = create({ class: "overlay" });
+    insertBefore(overlay, to);
+    await wait(90);
   }
 
-  const progress = (to:Element, config:any) => {
-    let element = to as HTMLElement;
-    
-    if (hasClass(element, "left")) return  element.style.clipPath = `polygon(0% 0%, 0% 100%, ${config}% 100%, ${config}% 0%)`;
+  overlay.onclick = () => {
+    if (isModal) return;
 
-    if (hasClass(element, "top")) return element.style.clipPath = `polygon(0% 0%, 100% 0%, 100% ${config}%, 0% ${config}%)`;
+    removeClass(from, "active");
+    removeClass(to, "active");
+    removeClass(overlay, "active");
+    target.close();
+  };
 
-    if (hasClass(element, "right")) return  element.style.clipPath = `polygon(100% 0%, 100% 100%, ${100 - config}% 100%, ${100 - config}% 0%)`;
-
-    if (hasClass(element, "bottom")) return element.style.clipPath = `polygon(0% 100%, 100% 100%, 100% ${100 - config}%, 0% ${100 - config}%)`;
-  }
-
-  const lastTheme = ():ILastTheme => {
-    if (_lastTheme.light && _lastTheme.dark) return _lastTheme;
-
-    let light = document.createElement("body");
-    light.className = "light";
-    document.body.appendChild(light);
-
-    let dark = document.createElement("body");
-    dark.className = "dark";
-    document.body.appendChild(dark);
-
-    let fromLight = getComputedStyle(light);
-    let fromDark = getComputedStyle(dark);
-    let variables = ['--primary', '--on-primary', '--primary-container', '--on-primary-container', '--secondary', '--on-secondary', '--secondary-container', '--on-secondary-container', '--tertiary', '--on-tertiary', '--tertiary-container', '--on-tertiary-container', '--error', '--on-error', '--error-container', '--on-error-container', '--background', '--on-background', '--surface', '--on-surface', '--outline', '--surface-variant', '--on-surface-variant', '--inverse-surface', '--inverse-on-surface'];
-    for(let i=0; i<variables.length; i++) {
-      _lastTheme.light += variables[i] + ":" + fromLight.getPropertyValue(variables[i]) + ";";
-      _lastTheme.dark += variables[i] + ":" + fromDark.getPropertyValue(variables[i]) + ";";
+  if (isNav) {
+    const elements = queryAll("dialog, a, .overlay", container);
+    for (let i = 0, n = elements.length; i < n; i++) {
+      const element = elements[i] as any;
+      removeClass(element, "active");
+      if (element.open) element.close();
     }
-
-    document.body.removeChild(light);
-    document.body.removeChild(dark);
-    return _lastTheme;
   }
 
-  const theme = (source:any):ILastTheme => {
-    if (!source || !window["materialDynamicColors"]) return lastTheme();
+  if (isActive) {
+    removeClass(from, "active");
+    removeClass(overlay, "active");
+    removeClass(to, "active");
+    target.close();
+  } else {
+    if (!hasTag(from, "button") && !hasClass(from, "button") && !hasClass(from, "chip")) addClass(from, "active");
+    addClass(overlay, "active");
+    addClass(to, "active");
 
-    let mode = /dark/i.test(document.body.className) ? "dark" : "light";
-    if (source && source.light && source.dark) {
-      _lastTheme.light = source.light;
-      _lastTheme.dark = source.dark;
-      document.body.setAttribute("style", source[mode]);
-      return source;
-    }
+    if (isModal) target.showModal();
+    else target.show();
+  }
+}
 
-    return window["materialDynamicColors"](source).then((theme) => {
-      const toCss = (data) => {
-        let style = "";
-        for (let i in data) {
-          let kebabCase = i.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
-          style += "--"+kebabCase+":"+data[i]+";";
-        }
-        return style;
+function snackbar (from: Element, to: Element, milliseconds?: number): void {
+  (document.activeElement as HTMLElement)?.blur();
+  tab(from);
+
+  const elements = queryAll(".snackbar.active");
+  for (let i = 0, n = elements.length; i < n; i++) removeClass(elements[i], "active");
+  addClass(to, "active");
+  on(to, "click", onClickSnackbar);
+
+  if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
+
+  if (milliseconds === -1) return;
+
+  _timeoutSnackbar = setTimeout(() => {
+    removeClass(to, "active");
+  }, milliseconds ?? 6000);
+}
+
+function lastTheme (): IBeerCssTheme {
+  if (_lastTheme.light && _lastTheme.dark) return _lastTheme;
+
+  const light = document.createElement("body");
+  light.className = "light";
+  document.body.appendChild(light);
+
+  const dark = document.createElement("body");
+  dark.className = "dark";
+  document.body.appendChild(dark);
+
+  const fromLight = getComputedStyle(light);
+  const fromDark = getComputedStyle(dark);
+  const variables = ["--primary", "--on-primary", "--primary-container", "--on-primary-container", "--secondary", "--on-secondary", "--secondary-container", "--on-secondary-container", "--tertiary", "--on-tertiary", "--tertiary-container", "--on-tertiary-container", "--error", "--on-error", "--error-container", "--on-error-container", "--background", "--on-background", "--surface", "--on-surface", "--surface-variant", "--on-surface-variant", "--outline", "--outline-variant", "--shadow", "--scrim", "--inverse-surface", "--inverse-on-surface", "--inverse-primary", "--surface-dim", "--surface-bright", "--surface-container-lowest", "--surface-container-low", "--surface-container", "--surface-container-high", "--surface-container-highest"];
+  for (let i = 0, n = variables.length; i < n; i++) {
+    _lastTheme.light += variables[i] + ":" + fromLight.getPropertyValue(variables[i]) + ";";
+    _lastTheme.dark += variables[i] + ":" + fromDark.getPropertyValue(variables[i]) + ";";
+  }
+
+  document.body.removeChild(light);
+  document.body.removeChild(dark);
+  return _lastTheme;
+}
+
+function theme (source?: IBeerCssTheme | any): IBeerCssTheme | Promise<IBeerCssTheme> {
+  if (!source || !(globalThis as any).materialDynamicColors) return lastTheme();
+
+  const mode = /dark/i.test(document.body.className) ? "dark" : "light";
+  if (source.light && source.dark) {
+    _lastTheme.light = source.light;
+    _lastTheme.dark = source.dark;
+    document.body.setAttribute("style", source[mode]);
+    return source;
+  }
+
+  return (globalThis as any).materialDynamicColors(source).then((theme: IBeerCssTheme) => {
+    const toCss = (data: any) => {
+      let style = "";
+      for (let i = 0, keys = Object.keys(data), n = keys.length; i < n; i++) {
+        const key = keys[i];
+        const value = data[key] as string;
+        const kebabCase = key.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+        style += "--" + kebabCase + ":" + value + ";";
       }
+      return style;
+    };
 
-      _lastTheme.light = toCss(theme.light);
-      _lastTheme.dark = toCss(theme.dark);
-      document.body.setAttribute("style", _lastTheme[mode]);
-      return _lastTheme;
-    });
+    _lastTheme.light = toCss(theme.light);
+    _lastTheme.dark = toCss(theme.dark);
+    document.body.setAttribute("style", _lastTheme[mode]);
+    return _lastTheme;
+  });
+}
+
+function mode (value: string | any): string {
+  if (!value) return /dark/i.test(document.body.className) ? "dark" : "light";
+  document.body.classList.remove("light", "dark");
+  document.body.classList.add(value);
+  const lastThemeStyle = value === "light" ? _lastTheme.light : _lastTheme.dark;
+  if ((globalThis as any).materialDynamicColors) document.body.setAttribute("style", lastThemeStyle);
+  return value;
+}
+
+function setup (): void {
+  if (_mutation) return;
+  _mutation = new MutationObserver(onMutation);
+  _mutation.observe(document.body, { childList: true, subtree: true });
+  onMutation();
+}
+
+function ui (selector?: string | Element, options?: string | number | IBeerCssTheme): string | IBeerCssTheme | Promise<IBeerCssTheme> | undefined {
+  if (selector) {
+    if (selector === "setup") return setup() as undefined;
+    if (selector === "guid") return guid();
+    if (selector === "mode") return mode(options);
+    if (selector === "theme") return theme(options);
+
+    const to = query(selector);
+    if (!to) return;
+    void open(to, to, options);
   }
 
-  const mode = (value:string):string => {
-    if (!value) return /dark/i.test(document.body.className) ? "dark" : "light";
-    document.body.classList.remove("light", "dark");
-    document.body.classList.add(value);
-    if (window["materialDynamicColors"]) document.body.setAttribute("style", _lastTheme[value]);
-    return value;
+  const elements = queryAll("[data-ui]");
+  for (let i = 0, n = elements.length; i < n; i++) on(elements[i], "click", onClickElement);
+
+  const labels = queryAll(".field > label");
+  for (let i = 0, n = labels.length; i < n; i++) on(labels[i], "click", onClickLabel);
+
+  const inputs = queryAll(".field > input:not([type=file], [type=color], [type=range]), .field > select, .field > textarea");
+  for (let i = 0, n = inputs.length; i < n; i++) {
+    const input = inputs[i];
+    on(input, "focus", onFocusInput);
+    on(input, "blur", onBlurInput);
+    updateInput(input);
   }
 
-  const setup = () => {
-    if (_mutation) return;
-    _mutation = new MutationObserver(onMutation);
-    _mutation.observe(document.body, { childList: true, subtree: true });
-    ui();
+  const files = queryAll(".field > input[type=file]");
+  for (let i = 0, n = files.length; i < n; i++) {
+    const file = files[i];
+    on(file, "change", onChangeFile);
+    updateFile(file);
   }
 
-  const ui = (selector?:string, config?:any) => {
-    if (selector) {
-      if (selector == "setup") return setup();
-      if (selector == "guid") return guid();
-      if (selector == "mode") return mode(config);
-      if (selector == "theme") return theme(config);
-
-      let to = query(selector);
-      let from = query("[data-ui='#" + to.id + "']");
-      open(from, to, config);
-    }
-
-    let elements = queryAll("[data-ui]");
-    elements.forEach((x:Element) => on(x, "click", onClickElement));
-
-    let labels = queryAll(".field > label");
-    labels.forEach((x:HTMLLabelElement) => on(x, "click", onClickLabel));
-
-    let inputs = queryAll(".field > input:not([type=file]):not([type=checkbox]):not([type=radio]), .field > select, .field > textarea");
-    inputs.forEach((x:Element) => {
-      on(x, "focus", onFocusInput);
-      on(x, "blur", onBlurInput);
-      updateInput(x);
-    });
-
-    let files = queryAll(".field > input[type=file]");
-    files.forEach((x:Element) => {
-      on(x, "change", onChangeFile);
-      updateFile(x);
-    });
+  const colors = queryAll(".field > input[type=color]");
+  for (let i = 0, n = colors.length; i < n; i++) {
+    const color = colors[i];
+    on(color, "change", onChangeColor);
+    updateColor(color);
   }
 
-  window["ui"] = ui;
-  window.addEventListener("load", () => ui("setup"));
-})();
+  const textareas = queryAll(".field.textarea > textarea");
+  for (let i = 0, n = textareas.length; i < n; i++) {
+    const textarea = textareas[i];
+    on(textarea, "input", onInputTextarea);
+    updateTextarea(textarea);
+  }
+
+  updateAllRanges();
+}
+
+if ((globalThis as any).addEventListener) (globalThis as any).addEventListener("load", async () => await ui("setup"));
+(globalThis as any).beercss = ui;
+(globalThis as any).ui = ui;
+export default ui;

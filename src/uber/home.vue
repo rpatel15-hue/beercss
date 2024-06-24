@@ -44,7 +44,8 @@ div
         .min
           h6.no-margin Home
           div {{ data.street }}
-  .modal.bottom.active.s.no-padding
+  .overlay
+  dialog.bottom.active.s.no-padding
     .padding.black.white-text
       p.bold(v-show="data.from") From {{ data.from }}
       p.bold(v-show="data.to") To {{ data.to }}
@@ -82,10 +83,10 @@ const go = () => {
 
   data.value.from = data.value.street;
   data.value.to = data.value.street;
-}
+};
 
 const clean = () => {
   data.value.to = "";
   data.value.from = "";
-}
+};
 </script>

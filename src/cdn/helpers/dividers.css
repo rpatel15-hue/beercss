@@ -1,20 +1,29 @@
-.divider,
-.small-divider,
-.medium-divider,
-.large-divider {
-  border-bottom: 1rem solid var(--outline);
+[class*=divider] {
+  min-inline-size: 1.5rem;
+  min-block-size: auto;
+  block-size: 0.0625rem;
+  background-color: var(--outline-variant);
   display: block;
+}
+
+[class*=divider] + * {
   margin: 0 !important;
 }
 
 .medium-divider {
-  margin: 16rem 0 !important;
+  margin: 1rem 0 !important;
 }
 
 .large-divider {
-  margin: 24rem 0 !important;
+  margin: 1.5rem 0 !important;
 }
 
 .small-divider {
-  margin: 8rem 0 !important;
+  margin: 0.5rem 0 !important;
+}
+
+.divider.vertical {
+  min-inline-size: auto;
+  min-block-size: 1.5rem;
+  inline-size: 0.0625rem;
 }
